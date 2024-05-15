@@ -1,5 +1,6 @@
 import * as command from "@app/functions/commands";
 import * as hears from "@app/functions/hears";
+import { rediseInit } from '@app/database/redis'
 
 /**
  * Start bot
@@ -11,6 +12,7 @@ import * as hears from "@app/functions/hears";
  *
  */
 (async () => {
+	await rediseInit();
 	await command.quit();
 	await command.start();
 	await command.sendPhoto();

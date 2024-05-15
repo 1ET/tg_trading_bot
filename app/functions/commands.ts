@@ -11,6 +11,7 @@ import bot from "@app/functions/telegraf";
 import * as databases from "@app/functions/databases";
 import config from "@configs/config";
 import { launchPolling, launchWebhook } from "./launcher";
+import { redis_client } from '@app/database/redis'
 
 const menu = [
 	[
@@ -104,6 +105,7 @@ const sendPhoto = async (): Promise<void> => {
  */
 const start = async (): Promise<void> => {
 	bot.start((ctx) => {
+		// redis_client.get(ctx.message.chat.id.toString())
 		ctx.telegram.sendMessage(ctx.message.chat.id,
 			userSetting.language === 'English'
 				? `Welcome to the RΞSPECT Bot! 😄\n🤖Customize your meme trades with our bot! \n🚀Whether it's a bullish run or a bearish slide📉\n<b>💥You'll catch it!</b> \n🤔️No need to constantly watch the market's ups and downs. \n💼Let us handle it for you!\n\nJust follow me:\nStep 1: Network Selection(Default Mainnet)\nStep 2: click Import Wallet or Generate Wallet\nStep 3: choose a Wallet to operate\n`

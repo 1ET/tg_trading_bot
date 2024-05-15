@@ -2,6 +2,8 @@ import translations from '@app/routes/translations'
 import bot from "@app/functions/telegraf";
 import * as tt from 'telegraf'
 import exp from 'constants';
+import { redis_client } from '@app/database/redis'
+
 
 const menu = [
     [
