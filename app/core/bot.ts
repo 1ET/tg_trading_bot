@@ -15,5 +15,7 @@ import * as hears from "@app/functions/hears";
 	await command.start();
 	await command.sendPhoto();
 	await hears.text();
+	await hears.inlineQuery();
+	await hears.callbackQuery();
 	await command.launch();
 })();

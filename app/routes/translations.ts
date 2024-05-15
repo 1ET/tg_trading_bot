@@ -9,6 +9,6 @@
  *
  */
 import en from "@translations/en.json";
-import it from "@translations/it.json";
+import zh from "@translations/zh.json";
 
-export default { en, it };
+export default { en, zh };

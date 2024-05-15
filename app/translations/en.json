@@ -5,5 +5,6 @@
 		"contributors": ["Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)"]
 	},
 	"app_name": "node-telegram-bot-boilerplate",
-	"hello": "Hello World!"
+	"hello": "Hello World!",
+	"language": "Welcome to the RΞSPECT Bot! 😄\n🤖Customize your meme trades with our bot! \n🚀Whether it's a bullish run or a bearish slide📉\n<b>💥You'll catch it!</b> \n🤔️No need to constantly watch the market's ups and downs. \n💼Let us handle it for you!\n\nJust follow me:\nStep 1: Network Selection(Default NEOEVM)\nStep 2: click Import Wallet or Generate Wallet\nStep 3: choose a Wallet to operate\n"
 }
