@@ -1,10 +1,11 @@
 {
 	"compilerOptions": {
 		"module": "CommonJS",
-		"target": "ES6",
+		"target": "es2016",
 		"sourceMap": true,
 		"outDir": "./dist/",
-		"lib": ["es2017", "es7", "es6", "DOM"],
+		"lib": ["ES2019", "es7", "es6", "DOM"],
+		// "lib": ["es6"],
 		"baseUrl": ".",
 		"resolveJsonModule": true,
 		"moduleResolution": "node",
