@@ -33,6 +33,7 @@ const text = async (): Promise<void> => {
 
 const callbackQuery = async (): Promise<void> => {
 	bot.on("callback_query", async (ctx: any) => {
+		console.log('Event', ctx.callbackQuery.data)
 		switch (ctx.callbackQuery.data) {
 			case 'Chinese':
 				userSetting.language = "Chinaese"
@@ -44,10 +45,86 @@ const callbackQuery = async (): Promise<void> => {
 				setLanguage(ctx)
 				ctx.answerCbQuery(ctx.callbackQuery.data)
 				break;
-			case 'buy':
+			case 'Buy':
 				console.log('用户点击购买')
 				buyCoin(ctx)
 				ctx.answerCbQuery('buy')
+				break;
+			case 'Sell':
+				console.log('用户点击出售123')
+				ctx.answerCbQuery('sell')
+				break;
+			case 'Position':
+				console.log('用户点击仓位')
+				ctx.answerCbQuery('sell')
+				break;
+			case 'Limit':
+				console.log('用户点击限价单')
+				ctx.answerCbQuery('Limit')
+				break;
+			case 'Sniper':
+				console.log('用户点击狙击')
+				ctx.answerCbQuery('Sniper')
+				break;
+			case 'Referrals':
+				console.log('用户点击推荐')
+				ctx.answerCbQuery('Referrals')
+				break;
+			case 'Setting':
+				console.log('用户点击首页设置')
+				ctx.answerCbQuery('Setting')
+				break;
+			case 'Withdraw':
+				console.log('用户点击提现')
+				ctx.answerCbQuery('Withdraw')
+				break;
+			case 'Help':
+				console.log('用户点击帮助')
+				ctx.answerCbQuery('Help')
+				break;
+			case 'Refresh':
+				console.log('用户点击首页帮助')
+				ctx.answerCbQuery('Refresh')
+				break;
+			case 'refresh_swap':
+				console.log('用户点击refresh_swap')
+				ctx.answerCbQuery('refresh_swap')
+				break;
+			case 'a_swap':
+				console.log('用户点击交易')
+				ctx.answerCbQuery('a_swap')
+				break;
+			case 'a_limit':
+				console.log('用户点击限价单')
+				ctx.answerCbQuery('a_limit')
+				break;
+			case 'solhalf':
+				console.log('用户点击买入0.5 sol')
+				ctx.answerCbQuery('solhalf')
+				break;
+			case 'solhalf':
+				console.log('用户点击买入0.5 sol')
+				ctx.answerCbQuery('solhalf')
+				break;
+			case 'sol_1':
+				console.log('用户点击买入1 sol')
+				ctx.answerCbQuery('sol_1')
+				break;
+			case 'sol_3':
+				console.log('用户点击买入3 sol')
+				ctx.answerCbQuery('sol_3')
+				break;
+			case 'sol_custom':
+				console.log('用户点击自定义数量')
+				ctx.answerCbQuery('sol_custom')
+				break;
+			case 'slippage':
+				console.log('用户点击滑点')
+				ctx.answerCbQuery('15% slippage')
+				break;
+			case 'slippage_custom':
+				console.log('用户点击自定义滑点')
+				ctx.answerCbQuery('x slippage_custom')
 				break;
 
 			default:

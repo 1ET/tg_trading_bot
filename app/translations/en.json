@@ -1,13 +1,4 @@
 {
-	"contributions": {
-		"language": "English",
-		"license": "CC BY 4.0",
-		"contributors": [
-			"Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)"
-		]
-	},
-	"app_name": "node-telegram-bot-boilerplate",
-	"hello": "Hello World!",
 	"tapToCopy": "(Tap to copy)",
 	"start": {
 		"welcome": "😄 Welcome to the 1t Bot! 🤖",
@@ -28,5 +19,33 @@
 		"refresh": "Refresh"
 	},
 	"buyCoinTip": "Enter a token symbol or address to buy",
-	"language": "Welcome to the RΞSPECT Bot! 😄\n🤖Customize your meme trades with our bot! \n🚀Whether it's a bullish run or a bearish slide📉\n<b>💥You'll catch it!</b> \n🤔️No need to constantly watch the market's ups and downs. \n💼Let us handle it for you!\n\nJust follow me:\nStep 1: Network Selection(Default NEOEVM)\nStep 2: click Import Wallet or Generate Wallet\nStep 3: choose a Wallet to operate\n"
+	"language": "Welcome to the RΞSPECT Bot! 😄\n🤖Customize your meme trades with our bot! \n🚀Whether it's a bullish run or a bearish slide📉\n<b>💥You'll catch it!</b> \n🤔️No need to constantly watch the market's ups and downs. \n💼Let us handle it for you!\n\nJust follow me:\nStep 1: Network Selection(Default NEOEVM)\nStep 2: click Import Wallet or Generate Wallet\nStep 3: choose a Wallet to operate\n",
+	"buy": "Buy",
+	"icon": {
+		"market": "📈",
+		"yes": " ✅ ",
+		"no": " ✅ "
+	},
+	"buySwap": {
+		"balance": "Balance",
+		"renounced": "Renounced ✅",
+		"notRuged": "Not Rugged ✅",
+		"hasRug": "Rugged ✅",
+		"wait1": "0.5 SOL ($84.23) ⇄ (https://t.me/helenus_trojanbot?start=switchToSell) 4.96M CUSHI ($80.74)",
+		"wait2": "Price Impact: 1.20%\n ⚠️ Liquidity CUSHI: 412.79M — SOL: 41.016"
+	},
+	"buySwapMenu": {
+		"back": "⬅ Back",
+		"refresh": "Refresh",
+		"swap": "✅ Swap",
+		"limit": "Limit",
+		"solhalf": "0.5 SOL",
+		"sol_1": "1 SOL",
+		"sol_3": "3 SOL",
+		"sol_5": "5 SOL",
+		"sol_10": "10 SOL",
+		"sol_custom": "X SOL✏️",
+		"slippage": "15% Slippage",
+		"slippage_custom": "X Slippage✏️"
+	}
 }

@@ -19,5 +19,33 @@
 		"refresh": "刷新"
 	},
 	"buyCoinTip": "输入代币符号或地址进行购买",
-	"language": "欢迎来到 RΞSPECT Bot！ 😄\n🤖我们的目标是帮住你定制交易并严格执行！\n🚀无论是看涨还是看跌📉\n<b>💥您都能抓住它！</b>\n🤔️无需持续关注市场的涨跌。\n💼让我们来替您处理！\n\n只需跟随以下步骤：\n第一步：网络选择（默认neoevm）\n第二步：点击导入钱包或生成钱包\n第三步：选择要操作的钱包\n"
+	"language": "欢迎来到 RΞSPECT Bot！ 😄\n🤖我们的目标是帮住你定制交易并严格执行！\n🚀无论是看涨还是看跌📉\n<b>💥您都能抓住它！</b>\n🤔️无需持续关注市场的涨跌。\n💼让我们来替您处理！\n\n只需跟随以下步骤：\n第一步：网络选择（默认neoevm）\n第二步：点击导入钱包或生成钱包\n第三步：选择要操作的钱包\n",
+	"buy": "购买",
+	"icon": {
+		"market": "📈",
+		"yes": " ✅ ",
+		"no": " ✅ "
+	},
+	"buySwap": {
+		"balance": "余额",
+		"renounced": "放弃 ✅",
+		"notRuged": "没有RUG ✅",
+		"hasRug": "RUG ✅",
+		"wait1": "0.5 SOL ($84.63) ⇄ (https://t.me/helenus_trojanbot?start=switchToSell) 4.11M CUSHI ($79.40)",
+		"wait2": "价格影响: 1.10%\n⚠️ 流动性 CUSHI: 372.44M — SOL: 44.712"
+	},
+	"buySwapMenu": {
+		"back": "⬅ 返回",
+		"refresh": "刷新",
+		"swap": "✅ 交易",
+		"limit": "限制",
+		"solhalf": "0.5 SOL",
+		"sol_1": "1 SOL",
+		"sol_3": "3 SOL",
+		"sol_5": "5 SOL",
+		"sol_10": "10 SOL",
+		"sol_custom": "X SOL✏️",
+		"slippage": "15% 滑点",
+		"slippage_custom": "X 滑点✏️"
+	}
 }

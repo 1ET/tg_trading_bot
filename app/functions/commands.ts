@@ -32,18 +32,6 @@ const quit = async (): Promise<void> => {
 };
 
 /**
- * command: /photo
- * =====================
- * Send photo from picsum to chat
- *
- */
-const sendPhoto = async (): Promise<void> => {
-	bot.command("photo", (ctx) => {
-		ctx.replyWithPhoto("https://picsum.photos/200/300/");
-	});
-};
-
-/**
  * command: /start
  * =====================
  * Send welcome message
@@ -81,5 +69,5 @@ const launch = async (): Promise<void> => {
 	}
 };
 
-export { launch, quit, sendPhoto, start, userSetting };
+export { launch, quit, start, userSetting };
 export default launch;

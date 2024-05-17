@@ -15,7 +15,6 @@ import { rediseInit } from '@app/database/redis'
 	// await rediseInit();
 	await command.quit();
 	await command.start();
-	await command.sendPhoto();
 	await hears.text();
 	await hears.inlineQuery();
 	await hears.callbackQuery();
