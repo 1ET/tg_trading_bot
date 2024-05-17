@@ -1,10 +1,23 @@
 {
-	"contributions": {
-		"language": "English",
-		"license": "CC BY 4.0",
-		"contributors": ["Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)"]
+	"tapToCopy": "(点击复制)",
+	"start": {
+		"welcome": "😄 欢迎来到 1t Bot! 🤖",
+		"chain": "🕸 Solana",
+		"balance": "余额",
+		"tip": "单击 '刷新' 按钮更新当前余额。"
 	},
-	"app_name": "node-telegram-bot-boilerplate",
-	"hello": "Hello World!",
-    "language": "欢迎来到 RΞSPECT Bot！ 😄\n🤖我们的目标是帮住你定制交易并严格执行！\n🚀无论是看涨还是看跌📉\n<b>💥您都能抓住它！</b>\n🤔️无需持续关注市场的涨跌。\n💼让我们来替您处理！\n\n只需跟随以下步骤：\n第一步：网络选择（默认neoevm）\n第二步：点击导入钱包或生成钱包\n第三步：选择要操作的钱包\n"
+	"startMenu": {
+		"buy": "买",
+		"sell": "卖",
+		"position": "仓位",
+		"limit": "限价订单",
+		"sniper": "LP Sniper",
+		"setting": "设置",
+		"referrals": "推荐人",
+		"withdraw": "提现",
+		"help": "帮助",
+		"refresh": "刷新"
+	},
+	"buyCoinTip": "输入代币符号或地址进行购买",
+	"language": "欢迎来到 RΞSPECT Bot！ 😄\n🤖我们的目标是帮住你定制交易并严格执行！\n🚀无论是看涨还是看跌📉\n<b>💥您都能抓住它！</b>\n🤔️无需持续关注市场的涨跌。\n💼让我们来替您处理！\n\n只需跟随以下步骤：\n第一步：网络选择（默认neoevm）\n第二步：点击导入钱包或生成钱包\n第三步：选择要操作的钱包\n"
 }

@@ -56,6 +56,7 @@
 		"prepare": "ts-patch install -s"
 	},
 	"dependencies": {
+		"@telegraf/session": "^2.0.0-beta.7",
 		"express": "^4.17.1",
 		"localtunnel": "^2.0.2",
 		"lowdb": "^1.0.0",
@@ -64,6 +65,7 @@
 	},
 	"devDependencies": {
 		"@ptkdev/all-shields-cli": "^2.0.2",
+		"@telegraf/types": "^7.1.0",
 		"@types/express": "^4.17.13",
 		"@types/jest": "^26.0.23",
 		"@types/localtunnel": "^2.0.1",

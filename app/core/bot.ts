@@ -12,7 +12,7 @@ import { rediseInit } from '@app/database/redis'
  *
  */
 (async () => {
-	await rediseInit();
+	// await rediseInit();
 	await command.quit();
 	await command.start();
 	await command.sendPhoto();

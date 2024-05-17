@@ -10,6 +10,8 @@
 import bot from "@app/functions/telegraf";
 import { userSetting } from '@app/functions/commands'
 import { setLanguage } from '@app/functions/ui'
+import { buyCoin } from '@app/functions/swap'
+import * as Telegram from "@telegraf/types";
 
 /**
  * hears: any taxt
@@ -18,18 +20,19 @@ import { setLanguage } from '@app/functions/ui'
  *
  */
 const text = async (): Promise<void> => {
-	bot.on("text", (ctx) => {
-		const Hi: string = "hi"
-		if (ctx.update.message.text === Hi) {
-			ctx.telegram.sendMessage(ctx.message.chat.id, "Hello dear user")
-		} else {
-			ctx.telegram.sendMessage(ctx.message.chat.id, `Your text --> ${ctx.update.message.text}`)
-		}
-	});
+	// bot.on("text", (ctx) => {
+	// 	const Hi: string = "hi"
+	// 	console.log('ctx.message.chat.id===》', ctx.message.chat.id)
+	// 	if (ctx.update.message.text === Hi) {
+	// 		ctx.telegram.sendMessage(ctx.message.chat.id, "Hello dear user")
+	// 	} else {
+	// 		ctx.telegram.sendMessage(ctx.message.chat.id, `Your text --> ${ctx.update.message.text}`)
+	// 	}
+	// });
 };
 
 const callbackQuery = async (): Promise<void> => {
-	bot.on("callback_query", async (ctx) => {
+	bot.on("callback_query", async (ctx: any) => {
 		switch (ctx.callbackQuery.data) {
 			case 'Chinese':
 				userSetting.language = "Chinaese"
@@ -40,6 +43,11 @@ const callbackQuery = async (): Promise<void> => {
 				userSetting.language = "English"
 				setLanguage(ctx)
 				ctx.answerCbQuery(ctx.callbackQuery.data)
+				break;
+			case 'buy':
+				console.log('用户点击购买')
+				buyCoin(ctx)
+				ctx.answerCbQuery('buy')
 				break;
 
 			default:
