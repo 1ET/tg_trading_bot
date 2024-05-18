@@ -116,6 +116,7 @@ pids
 npm-debug.log
 /node_modules
 .env
+/pem
 # Husky #
 /.husky/_/
 
