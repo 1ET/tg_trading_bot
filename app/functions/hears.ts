@@ -1,16 +1,7 @@
-/**
- * Telegraf Hears
- * =====================
- *
- * @contributors: Patryk Rzucidło [@ptkdev] <support@ptkdev.io> (https://ptk.dev)
- *
- * @license: MIT License
- *
- */
-import bot from "@app/functions/telegraf";
+import bot from "@app/functions/grammy";
 import { userSetting } from '@app/functions/commands'
 import { setLanguage } from '@app/functions/ui'
-import { buyCoin } from '@app/functions/swap'
+// import { buyCoin } from '@app/functions/swap'
 import * as Telegram from "@telegraf/types";
 
 /**
@@ -20,75 +11,88 @@ import * as Telegram from "@telegraf/types";
  *
  */
 const text = async (): Promise<void> => {
-	// bot.on("text", (ctx) => {
-	// 	const Hi: string = "hi"
-	// 	console.log('ctx.message.chat.id===》', ctx.message.chat.id)
-	// 	if (ctx.update.message.text === Hi) {
-	// 		ctx.telegram.sendMessage(ctx.message.chat.id, "Hello dear user")
-	// 	} else {
-	// 		ctx.telegram.sendMessage(ctx.message.chat.id, `Your text --> ${ctx.update.message.text}`)
-	// 	}
-	// });
+	bot.on("message", async (ctx) => {
+		console.log('message===>', await ctx.session)
+		// 	const Hi: string = "hi"
+		// 	console.log('ctx.message.chat.id===》', ctx.message.chat.id)
+		// 	if (ctx.update.message.text === Hi) {
+		// 		ctx.telegram.sendMessage(ctx.message.chat.id, "Hello dear user")
+		// 	} else {
+		// 		ctx.telegram.sendMessage(ctx.message.chat.id, `Your text --> ${ctx.update.message.text}`)
+		// 	}
+	});
 };
 
 const callbackQuery = async (): Promise<void> => {
-	bot.on("callback_query", async (ctx: any) => {
-		console.log('Event', ctx.callbackQuery.data)
+	bot.on("callback_query:data", async (ctx: any) => {
+		console.log('Event_02', ctx.callbackQuery.data)
 		switch (ctx.callbackQuery.data) {
 			case 'Chinese':
+				console.log('用户点击Chinese')
 				userSetting.language = "Chinaese"
 				setLanguage(ctx)
-				ctx.answerCbQuery(ctx.callbackQuery.data)
+				ctx.reply(ctx.callbackQuery.data)
 				break;
 			case 'English':
 				userSetting.language = "English"
 				setLanguage(ctx)
-				ctx.answerCbQuery(ctx.callbackQuery.data)
+				ctx.reply(ctx.callbackQuery.data)
 				break;
 			case 'Buy':
 				console.log('用户点击购买')
-				buyCoin(ctx)
-				ctx.answerCbQuery('buy')
+				// buyCoin(ctx)
+				ctx.reply('buy')
 				break;
 			case 'Sell':
-				console.log('用户点击出售123')
-				ctx.answerCbQuery('sell')
+				try {
+					console.log('用户点击出售')
+					ctx.session = 9
+					ctx.reply('sell')
+				} catch (error) {
+					console.log('用户点击Sell失败', error)
+				}
 				break;
 			case 'Position':
-				console.log('用户点击仓位')
-				ctx.answerCbQuery('sell')
+				try {
+					console.log('用户点击仓位', ctx)
+					ctx.reply('Position')
+				} catch (error) {
+					console.log('用户点击仓位失败', error)
+				}
+
 				break;
 			case 'Limit':
+				console.log(ctx.session)
 				console.log('用户点击限价单')
-				ctx.answerCbQuery('Limit')
+				ctx.reply('Limit')
 				break;
 			case 'Sniper':
 				console.log('用户点击狙击')
-				ctx.answerCbQuery('Sniper')
+				ctx.reply('Sniper')
 				break;
 			case 'Referrals':
 				console.log('用户点击推荐')
-				ctx.answerCbQuery('Referrals')
+				ctx.reply('Referrals')
 				break;
 			case 'Setting':
 				console.log('用户点击首页设置')
-				ctx.answerCbQuery('Setting')
+				ctx.reply('Setting')
 				break;
 			case 'Withdraw':
 				console.log('用户点击提现')
-				ctx.answerCbQuery('Withdraw')
+				ctx.reply('Withdraw')
 				break;
 			case 'Help':
 				console.log('用户点击帮助')
-				ctx.answerCbQuery('Help')
+				ctx.reply('Help')
 				break;
 			case 'Refresh':
 				console.log('用户点击首页帮助')
-				ctx.answerCbQuery('Refresh')
+				ctx.reply('Refresh')
 				break;
 			case 'refresh_swap':
 				console.log('用户点击refresh_swap')
-				ctx.answerCbQuery('refresh_swap')
+				ctx.reply('refresh_swap')
 				break;
 			case 'a_swap':
 				console.log('用户点击交易')

@@ -1,5 +1,5 @@
 import translations from '@app/routes/translations'
-import bot from "@app/functions/telegraf";
+import bot from "@app/functions/grammy";
 import * as tt from 'telegraf'
 import exp from 'constants';
 import { redis_client } from '@app/database/redis'

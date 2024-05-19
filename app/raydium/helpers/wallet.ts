@@ -20,9 +20,12 @@ export function getWallet(wallet: string): Keypair {
     return Keypair.fromSecretKey(bs58.decode(wallet));
 }
 
-export function generateWallet(): Keypair {
+export function generateWallet() {
     const newKeypair = Keypair.generate()
-    return newKeypair
+    return {
+        publicKey: newKeypair.publicKey.toString(),
+        priKey: bs58.encode(newKeypair.secretKey)
+    }
 }
 
 // let newWallet = generateWallet()

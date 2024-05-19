@@ -1,6 +1,6 @@
-function buyCoin(ctx) {
-    ctx.scene.enter("buy")
-}
-export {
-    buyCoin
-}
+// function buyCoin(ctx) {
+//     ctx.scene.enter("buy")
+// }
+// export {
+//     buyCoin
+// }

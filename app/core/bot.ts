@@ -1,7 +1,6 @@
 import * as command from "@app/functions/commands";
 import * as hears from "@app/functions/hears";
-import { rediseInit } from '@app/database/redis'
-
+import { initCrypto } from "@app/crypto/index"
 /**
  * Start bot
  * =====================
@@ -13,6 +12,7 @@ import { rediseInit } from '@app/database/redis'
  */
 (async () => {
 	// await rediseInit();
+	await initCrypto()
 	await command.quit();
 	await command.start();
 	await hears.text();

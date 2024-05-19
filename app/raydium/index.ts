@@ -1,5 +1,5 @@
 import RaydiumSwap from './raydiumSwap/swap'
-import { Transaction, Connection, VersionedTransaction, LAMPORTS_PER_SOL } from '@solana/web3.js'
+import { Transaction, Connection, VersionedTransaction, LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js'
 import { MAINNET_PROGRAM_ID, LIQUIDITY_STATE_LAYOUT_V4, MARKET_STATE_LAYOUT_V3, } from '@raydium-io/raydium-sdk';
 require('dotenv').config()
 const connection = new Connection(process.env.RPC_URL || "", { commitment: 'confirmed' })
@@ -17,6 +17,15 @@ const checkPool = async (mintA: string, mintB: string) => {
     const findPoolKey = await raydiumSwap.findPoolInfoForTokens(mintA, mintB)
 
 }
+// 查看余额
+const checkBalance = async (publicKey: PublicKey) => {
+    const result = await connection.getBalance(new PublicKey(publicKey))
+    return result
+}
 
 
-export { swap, checkPool }
+export {
+    swap,
+    checkPool,
+    checkBalance
+}
