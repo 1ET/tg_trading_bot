@@ -39,14 +39,18 @@ const start = async (): Promise<void> => {
 			console.log('userExit===>', userExit['pub'])
 			const userBalance = await checkBalance(userExit['pub'])
 			const balanceFormat = moneyFormat2(userBalance * 1e-9)
-			console.log('userBalance===>', userBalance)
+			ctx.session.key = userExit.id
+			ctx.session.value = {
+				userName: userExit['userName'],
+				pubkey: userExit['pub'],
+				priKey: userExit['pri'],
+				balance: balanceFormat
+			}
 			//  . 将策略和公钥写入session
 			const startBoxParams = {
 				pub: userExit['pub'],
 				balance: balanceFormat
 			}
-			// 没有数据
-			// . 创建钱包并写入到数据库
 			ctx.reply(startBox(startBoxParams),
 				{
 					parse_mode: 'HTML',
@@ -59,10 +63,6 @@ const start = async (): Promise<void> => {
 		} else {
 			ctx.reply("serve error!")
 		}
-	})
-	bot.command('help', (ctx: any) => {
-		// const count = ctx.session.pizzaCount;
-		console.log("count===>", ctx.session)
 	})
 };
 

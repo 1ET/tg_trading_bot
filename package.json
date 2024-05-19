@@ -56,6 +56,8 @@
 		"prepare": "ts-patch install -s"
 	},
 	"dependencies": {
+		"@grammyjs/conversations": "^1.2.0",
+		"@grammyjs/parse-mode": "^1.10.0",
 		"@grammyjs/ratelimiter": "^1.2.0",
 		"@grammyjs/storage-free": "^2.4.2",
 		"@grammyjs/storage-redis": "^2.4.2",

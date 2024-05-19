@@ -3,6 +3,7 @@ import { userSetting } from '@app/functions/commands'
 import { setLanguage } from '@app/functions/ui'
 // import { buyCoin } from '@app/functions/swap'
 import * as Telegram from "@telegraf/types";
+import { bold, fmt, hydrateReply, italic, link } from "@grammyjs/parse-mode";
 
 /**
  * hears: any taxt
@@ -12,7 +13,10 @@ import * as Telegram from "@telegraf/types";
  */
 const text = async (): Promise<void> => {
 	bot.on("message", async (ctx) => {
-		console.log('message===>', await ctx.session)
+
+		console.log('message===>', ctx.update.message.text)
+		// console.log('message===>', await ctx.session)
+		ctx.replyFmt(fmt`${bold(ctx.update.message.text ?? 'noText')}`)
 		// 	const Hi: string = "hi"
 		// 	console.log('ctx.message.chat.id===》', ctx.message.chat.id)
 		// 	if (ctx.update.message.text === Hi) {
@@ -40,6 +44,9 @@ const callbackQuery = async (): Promise<void> => {
 				break;
 			case 'Buy':
 				console.log('用户点击购买')
+				// 1. 查池子
+				// 2. 数据库有就从数据库拿，数据库没有就从链上查
+				// 3. buy应该是个页面，让后出弹窗输入数量进行swap
 				// buyCoin(ctx)
 				ctx.reply('buy')
 				break;
@@ -83,8 +90,12 @@ const callbackQuery = async (): Promise<void> => {
 				ctx.reply('Withdraw')
 				break;
 			case 'Help':
+				// await ctx.reply("你好！你叫什么名字？");
+				// const { message } = await conversation.wait();
+				// await ctx.reply(`欢迎加入聊天, ${message.text}!`);
 				console.log('用户点击帮助')
-				ctx.reply('Help')
+				await ctx.conversation.enter("greeting")
+				// ctx.reply('Help')
 				break;
 			case 'Refresh':
 				console.log('用户点击首页帮助')
