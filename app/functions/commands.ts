@@ -42,7 +42,8 @@ const start = async (): Promise<void> => {
 		// await redis_client.hSet('key', 'field', 'value');
 		// await redis_client.hGetAll('key');
 		// redis_client.get(ctx.message.chat.id.toString())
-		console.log('start===>', ctx.message.from.id)
+		// ctx.session
+		console.log('start===>', ctx)
 		ctx.telegram.sendMessage(ctx.message.chat.id,
 			startBox(),
 			{

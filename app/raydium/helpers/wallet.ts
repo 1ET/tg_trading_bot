@@ -1,6 +1,6 @@
 import { Keypair } from '@solana/web3.js';
 import bs58 from 'bs58';
-import { mnemonicToSeedSync } from 'bip39';
+import { mnemonicToSeedSync, generateMnemonic } from 'bip39';
 import { derivePath } from 'ed25519-hd-key';
 
 export function getWallet(wallet: string): Keypair {
@@ -19,3 +19,12 @@ export function getWallet(wallet: string): Keypair {
     // most likely someone pasted base58 encoded private key
     return Keypair.fromSecretKey(bs58.decode(wallet));
 }
+
+export function generateWallet(): Keypair {
+    const newKeypair = Keypair.generate()
+    return newKeypair
+}
+
+// let newWallet = generateWallet()
+// console.log('newWallet====>', newWallet.publicKey)
+// console.log('secretKey====>', bs58.encode(newWallet.secretKey))
