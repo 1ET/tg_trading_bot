@@ -12,22 +12,23 @@ const walletConfigurationScene = new Scenes.WizardScene(
         await ctx.sendMessage(language === "English" ? translations.en.buyCoinTip : translations.zh.buyCoinTip, {
             reply_to_message_id: messageId
         });
-        return ctx.wizard.next();
-    },
-
-    async (ctx) => {
-        // raydium fin token
-        await ctx.telegram.sendMessage(ctx.message.chat.id,
-            buyBox(),
-            {
-                parse_mode: 'HTML',
-                reply_markup: {
-                    inline_keyboard:
-                        buySwapMenu
-                },
-            })
+        // return ctx.wizard.next();
         return await ctx.scene.leave();
     },
+
+    // async (ctx) => {
+    //     // raydium fin token
+    //     await ctx.telegram.sendMessage(ctx.message.chat.id,
+    //         buyBox(),
+    //         {
+    //             parse_mode: 'HTML',
+    //             reply_markup: {
+    //                 inline_keyboard:
+    //                     buySwapMenu
+    //             },
+    //         })
+    //     return await ctx.scene.leave();
+    // },
 )
 
 const walletScene = walletConfigurationScene

@@ -35,6 +35,7 @@
 		"wait2": "价格影响: 1.10%\n⚠️ 流动性 CUSHI: 372.44M — SOL: 44.712"
 	},
 	"buySwapMenu": {
+		"query": "输入代币符号或地址进行购买",
 		"back": "⬅ 返回",
 		"refresh": "刷新",
 		"swap": "✅ 交易",

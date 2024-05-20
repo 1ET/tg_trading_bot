@@ -7,7 +7,6 @@ async function getUserExit(userInfo) {
     let querySql = `SELECT  * FROM user WHERE  id = '${userInfo.id}';`
     const results = await mysqlInstance.query(querySql)
     if (results[0][0].id) {
-        // 5340665667
         //  用户存在, 返回查询的数据
         return results[0][0]
     } else {
@@ -33,6 +32,21 @@ async function getUserExit(userInfo) {
     }
 }
 
+async function getPoolKeys(baseMint: string, quoteMint: string = "So11111111111111111111111111111111111111112") {
+    let querySql = `SELECT * FROM raydium_pool WHERE baseMint = '${baseMint}' AND quoteMint = '${quoteMint}' LIMIT 5 OFFSET 0`
+    const results = await mysqlInstance.query(querySql)
+    console.log(results[0][0], '__results__')
+    if (results[0][0]) {
+        //  存在, 返回查询的数据
+        return results[0][0]
+    } else {
+        //  不存在,返回 空数组
+        return false
+    }
+
+}
+
 export {
-    getUserExit
+    getUserExit,
+    getPoolKeys
 }

@@ -45,10 +45,8 @@ const callbackQuery = async (): Promise<void> => {
 			case 'Buy':
 				console.log('用户点击购买')
 				// 1. 查池子
-				// 2. 数据库有就从数据库拿，数据库没有就从链上查
-				// 3. buy应该是个页面，让后出弹窗输入数量进行swap
-				// buyCoin(ctx)
-				ctx.reply('buy')
+				// 2. 找到pair就进行任务
+				await ctx.conversation.enter("buySwapCvers")
 				break;
 			case 'Sell':
 				try {
@@ -90,11 +88,8 @@ const callbackQuery = async (): Promise<void> => {
 				ctx.reply('Withdraw')
 				break;
 			case 'Help':
-				// await ctx.reply("你好！你叫什么名字？");
-				// const { message } = await conversation.wait();
-				// await ctx.reply(`欢迎加入聊天, ${message.text}!`);
-				console.log('用户点击帮助')
-				await ctx.conversation.enter("greeting")
+				console.log('用户点击帮助-help弹窗')
+				await ctx.conversation.enter("greetingCvers")
 				// ctx.reply('Help')
 				break;
 			case 'Refresh':

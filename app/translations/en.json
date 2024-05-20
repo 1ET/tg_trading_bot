@@ -35,6 +35,7 @@
 		"wait2": "Price Impact: 1.20%\n ⚠️ Liquidity CUSHI: 412.79M — SOL: 41.016"
 	},
 	"buySwapMenu": {
+		"query": "Enter a token symbol or address to buy",
 		"back": "⬅ Back",
 		"refresh": "Refresh",
 		"swap": "✅ Swap",

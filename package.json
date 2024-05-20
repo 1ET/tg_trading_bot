@@ -67,6 +67,7 @@
 		"@solana/spl-token": "^0.4.6",
 		"@solana/web3.js": "^1.91.8",
 		"@telegraf/session": "^2.0.0-beta.7",
+		"axios": "^1.7.0",
 		"bip39": "^3.1.0",
 		"bluebird": "^3.7.2",
 		"bs58": "^5.0.0",

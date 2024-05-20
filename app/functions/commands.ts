@@ -27,7 +27,8 @@ const quit = async (): Promise<void> => {
  */
 const start = async (): Promise<void> => {
 	bot.command('start', async ctx => {
-		console.log(ctx.from)
+		// console.log(ctx.from)
+		console.log(ctx.session)
 		if (ctx.from) {
 			// 1. 查询数据库是否存在数据
 			// 有数据
