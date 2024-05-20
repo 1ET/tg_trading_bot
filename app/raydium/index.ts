@@ -46,10 +46,11 @@ const checkTokenInfo = async (publicKey: string) => {
     const responese = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${publicKey}`)
     if (responese.status === 200) {
         const parisArray = responese.data.pairs
-        console.log('checkTokenInfo==>', parisArray)
+        // console.log('checkTokenInfo==>', parisArray)
         if (parisArray && parisArray.length) {
             let raydiumPool = parisArray.filter(item => item.dexId === "raydium")
-            console.log("找到交易对==>", raydiumPool)
+            // console.log("找到交易对==>", raydiumPool)
+            console.log("找到交易对==>")
             return raydiumPool
         } else {
             console.log('未找到交易对')

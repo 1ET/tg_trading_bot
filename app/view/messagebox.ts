@@ -22,18 +22,16 @@ function startBox(boxParams) {
     return startBoxUI
 }
 
-function buyBox(tokenInfo, userInfo) {
+function buyBox(tokenInfo: any, userInfo: any) {
     language = 'English'
-    let publicKey = 'GUVkvJbzTpXJM9Bqnk873m2on2VL3zvgtnS8tXYKbEL5'
     let startBoxUI: string = ''
     switch (language) {
         case 'English':
-            startBoxUI = `<b>${translations.en.buy}</b> <code>$CUSHI</code> ${translations.en.icon.market}\n <code>${publicKey}</code> <b>${translations.en.tapToCopy}</b>\n\n${translations.en.start.balance}: <b>0 Sol</b> \n${translations.en.buySwap.renounced}\n ${translations.en.buySwap.wait1}\n ${translations.en.buySwap.wait2}`
+            startBoxUI = `<b>${translations.en.buy}</b> <code>${tokenInfo.baseToken.symbol}</code> ${translations.en.icon.market}\n <code>${tokenInfo.baseToken.address}</code> <b>${translations.en.tapToCopy}</b>\n\n${translations.en.start.balance}: <b>${userInfo.balance} SOL</b> \n${translations.en.buySwap.renounced}\n ${translations.en.buySwap.price}: <b>$${tokenInfo.priceUsd}</b> — ${translations.en.buySwap.liq}: <b>$${tokenInfo.liquidity.usd}</b> — ${translations.en.buySwap.mc}: <b>$${tokenInfo.fdv}</b> \n ${translations.en.buySwap.time1h}: <b>$${tokenInfo.priceChange.h1}%</b> — ${translations.en.buySwap.time24h}: <b>$${tokenInfo.priceChange.h24}%</b>`
             break;
         case 'Chinese':
-            startBoxUI = `<b>${translations.zh.buy}</b> <code>$CUSHI</code> ${translations.zh.icon.market}\n <code>${publicKey}</code> <b>${translations.zh.tapToCopy}</b>\n\n${translations.zh.start.balance}: <b>0 Sol</b> \n${translations.zh.buySwap.renounced}\n ${translations.zh.buySwap.wait1}\n ${translations.zh.buySwap.wait2}`
+            startBoxUI = `<b>${translations.zh.buy}</b> <code>${tokenInfo.baseToken.symbol}</code> ${translations.zh.icon.market}\n <code>${tokenInfo.baseToken.address}</code> <b>${translations.zh.tapToCopy}</b>\n\n${translations.zh.start.balance}: <b>${userInfo.balance} SOL</b> \n${translations.zh.buySwap.renounced}\n ${translations.zh.buySwap.price}: <b>$${tokenInfo.priceUsd}</b> — ${translations.zh.buySwap.liq}: <b>$${tokenInfo.liquidity.usd}</b> — ${translations.zh.buySwap.mc}: <b>$${tokenInfo.fdv}</b> \n ${translations.en.buySwap.time1h}: <b>$${tokenInfo.priceChange.h1}%</b> — ${translations.en.buySwap.time24h}: <b>$${tokenInfo.priceChange.h24}%</b>`
             break;
-
         default:
             break;
     }

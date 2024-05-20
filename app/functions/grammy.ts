@@ -15,9 +15,16 @@ import {
 } from "@grammyjs/conversations"
 import { greetingCvers, buySwapCvers } from "@app/view/conversation"
 
+interface SessionValue {
+    userName: string;
+    pubkey: string;
+    priKey: string;
+    balance: number;
+}
+
 interface SessionData {
     key: string;
-    value: unknown;
+    value: SessionValue;
 }
 type MyContext = Context & SessionFlavor<SessionData> & ConversationFlavor
 type MyConversation = Conversation<MyContext>;
@@ -34,14 +41,15 @@ function initial(): SessionData {
     };
 }
 
-async function init() {
-    // bot.use(session({
-    //     initial,
-    //     storage: freeStorage<SessionData>(configs.telegram.token)
-    // }))
-    bot.use(session())
-}
-init()
+// async function init() {
+// bot.use(session({
+//     initial,
+//     storage: freeStorage<SessionData>(configs.telegram.token)
+// }))
+// bot.use(session())
+// }
+// init()
+bot.use(session({ initial }))
 bot.use(hydrateReply)
 bot.use(limit())
 bot.use(conversations())

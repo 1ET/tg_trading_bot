@@ -25,8 +25,8 @@ const startMenu = [
 
 const buySwapMenu = [
     [
-        { text: language === "English" ? translations.en.buySwapMenu.back : translations.zh.buySwapMenu.back, callback_data: 'back' },
-        { text: language === "English" ? translations.en.buySwapMenu.refresh : translations.zh.buySwapMenu.refresh, callback_data: 'refresh_swap' },
+        { text: language === "English" ? translations.en.buySwapMenu.back : translations.zh.buySwapMenu.back, callback_data: 'Back' },
+        { text: language === "English" ? translations.en.buySwapMenu.refresh : translations.zh.buySwapMenu.refresh, callback_data: 'Refresh_Swap' },
     ],
     [
         { text: language === "English" ? translations.en.buySwapMenu.swap : translations.zh.buySwapMenu.swap, callback_data: 'a_swap' },

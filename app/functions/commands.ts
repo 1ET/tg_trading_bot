@@ -27,8 +27,7 @@ const quit = async (): Promise<void> => {
  */
 const start = async (): Promise<void> => {
 	bot.command('start', async ctx => {
-		// console.log(ctx.from)
-		console.log(ctx.session)
+		console.log('start===>')
 		if (ctx.from) {
 			// 1. 查询数据库是否存在数据
 			// 有数据
@@ -37,7 +36,6 @@ const start = async (): Promise<void> => {
 				ctx.reply("serve error!")
 				return
 			}
-			console.log('userExit===>', userExit['pub'])
 			const userBalance = await checkBalance(userExit['pub'])
 			const balanceFormat = moneyFormat2(userBalance * 1e-9)
 			ctx.session.key = userExit.id
@@ -47,6 +45,7 @@ const start = async (): Promise<void> => {
 				priKey: userExit['pri'],
 				balance: balanceFormat
 			}
+			console.log(ctx.session)
 			//  . 将策略和公钥写入session
 			const startBoxParams = {
 				pub: userExit['pub'],
@@ -79,6 +78,7 @@ const launch = async (): Promise<void> => {
 		launchWebhook();
 	} else {
 		launchPolling();
+		console.log('启动成功')
 	}
 };
 

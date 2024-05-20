@@ -31,6 +31,11 @@
 		"renounced": "Renounced ✅",
 		"notRuged": "Not Rugged ✅",
 		"hasRug": "Rugged ✅",
+		"price": "Price",
+		"liq": "LIQ",
+		"mc": "MC",
+		"time1h": "1h",
+		"time24h": "24h",
 		"wait1": "0.5 SOL ($84.23) ⇄ (https://t.me/helenus_trojanbot?start=switchToSell) 4.96M CUSHI ($80.74)",
 		"wait2": "Price Impact: 1.20%\n ⚠️ Liquidity CUSHI: 412.79M — SOL: 41.016"
 	},

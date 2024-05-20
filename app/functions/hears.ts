@@ -4,26 +4,15 @@ import { setLanguage } from '@app/functions/ui'
 // import { buyCoin } from '@app/functions/swap'
 import * as Telegram from "@telegraf/types";
 import { bold, fmt, hydrateReply, italic, link } from "@grammyjs/parse-mode";
+import { startMenu, buySwapMenu } from '@app/view/menu'
+import { startBox } from '@app/view/messagebox'
+import { checkTokenInfo } from "@app/raydium/index"
+import { buyBox } from '@app/view/messagebox'
+import { moneyFormat2 } from '@app/utils/index'
 
-/**
- * hears: any taxt
- * =====================
- * Listen any text user write
- *
- */
 const text = async (): Promise<void> => {
 	bot.on("message", async (ctx) => {
-
-		console.log('message===>', ctx.update.message.text)
-		// console.log('message===>', await ctx.session)
 		ctx.replyFmt(fmt`${bold(ctx.update.message.text ?? 'noText')}`)
-		// 	const Hi: string = "hi"
-		// 	console.log('ctx.message.chat.id===》', ctx.message.chat.id)
-		// 	if (ctx.update.message.text === Hi) {
-		// 		ctx.telegram.sendMessage(ctx.message.chat.id, "Hello dear user")
-		// 	} else {
-		// 		ctx.telegram.sendMessage(ctx.message.chat.id, `Your text --> ${ctx.update.message.text}`)
-		// 	}
 	});
 };
 
@@ -44,8 +33,6 @@ const callbackQuery = async (): Promise<void> => {
 				break;
 			case 'Buy':
 				console.log('用户点击购买')
-				// 1. 查池子
-				// 2. 找到pair就进行任务
 				await ctx.conversation.enter("buySwapCvers")
 				break;
 			case 'Sell':
@@ -96,10 +83,21 @@ const callbackQuery = async (): Promise<void> => {
 				console.log('用户点击首页帮助')
 				ctx.reply('Refresh')
 				break;
-			case 'refresh_swap':
-				console.log('用户点击refresh_swap')
-				ctx.reply('refresh_swap')
-				break;
+			// case 'Back':
+			// 	console.log('hears_Back')
+			// 	const startBoxParams = {
+			// 		pub: ctx.session.value.pubkey,
+			// 		balance: moneyFormat2(ctx.session.value.balance * 1e-9)
+			// 	}
+			// 	await ctx.deleteMessages([ctx.callbackQuery.message.message_id])
+			// 	await ctx.reply(startBox(startBoxParams), {
+			// 		parse_mode: "HTML",
+			// 		reply_markup: {
+			// 			inline_keyboard:
+			// 				startMenu
+			// 		}
+			// 	})
+			// 	break;
 			case 'a_swap':
 				console.log('用户点击交易')
 				ctx.answerCbQuery('a_swap')
