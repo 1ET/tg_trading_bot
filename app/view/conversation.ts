@@ -51,7 +51,7 @@ async function buySwapCvers(conversation: MyConversation, ctx: MyContext) {
             userInputCtx.message?.message_id
         ])
         // 查询池子获取token信息,并返回购买菜单
-        await ctx.editMessageText(buyBox(dexQuery[0], ctx.session.value), {
+        await ctx.editMessageText(buyBox(dexQuery[0], ctx.session.userInfo.value), {
             parse_mode: "HTML",
             reply_markup: {
                 inline_keyboard:
@@ -72,8 +72,8 @@ async function refreshBuySwap(conversation, ctx, dexQuery, message) {
     const response = await conversation.waitForCallbackQuery(["Back", "Refresh_Swap"]);
     if (response.match === "Back") {
         const startBoxParams = {
-            pub: ctx.session.value.pubkey,
-            balance: moneyFormat2(ctx.session.value.balance * 1e-9)
+            pub: ctx.session.userInfo.value.pubkey,
+            balance: moneyFormat2(ctx.session.userInfo.value.balance * 1e-9)
         }
         await ctx.editMessageText(startBox(startBoxParams), {
             parse_mode: "HTML",
@@ -90,7 +90,7 @@ async function refreshBuySwap(conversation, ctx, dexQuery, message) {
         tempData.fdv = 0
         tempData.priceChange.h1 = 0
         tempData.priceChange.h24 = 0
-        await ctx.editMessageText(buyBox(tempData, ctx.session.value), {
+        await ctx.editMessageText(buyBox(tempData, ctx.session.userInfo.value), {
             parse_mode: "HTML",
             reply_markup: {
                 inline_keyboard:
@@ -99,7 +99,7 @@ async function refreshBuySwap(conversation, ctx, dexQuery, message) {
         })
         const Refresh_Swap_DexQuery = await checkTokenInfo(message?.text ?? '')
         console.log('用户点击刷新')
-        await ctx.editMessageText(buyBox(Refresh_Swap_DexQuery[0], ctx.session.value), {
+        await ctx.editMessageText(buyBox(Refresh_Swap_DexQuery[0], ctx.session.userInfo.value), {
             parse_mode: "HTML",
             reply_markup: {
                 inline_keyboard:
@@ -128,8 +128,8 @@ async function copyTradeCvers(conversation: MyConversation, ctx: MyContext) {
     const response = await conversation.waitForCallbackQuery(["NewCopy", "PauseAllCopy", "CopyTradeBack"])
     if (response.match === "NewCopy") {
         // const startBoxParams = {
-        //     pub: ctx.session.value.pubkey,
-        //     balance: moneyFormat2(ctx.session.value.balance * 1e-9)
+        //     pub: ctx.session.userInfo.value.pubkey,
+        //     balance: moneyFormat2(ctx.session.userInfo.value.balance * 1e-9)
         // }
         // await ctx.editMessageText(startBox(startBoxParams), {
         //     parse_mode: "HTML",
@@ -170,8 +170,8 @@ To manage your Copy Trade:
 //     const response = await conversation.waitForCallbackQuery(["NewCopy", "Refresh_Swap"]);
 //     if (response.match === "Back") {
 //         const startBoxParams = {
-//             pub: ctx.session.value.pubkey,
-//             balance: moneyFormat2(ctx.session.value.balance * 1e-9)
+//             pub: ctx.session.userInfo.value.pubkey,
+//             balance: moneyFormat2(ctx.session.userInfo.value.balance * 1e-9)
 //         }
 //         await ctx.editMessageText(startBox(startBoxParams), {
 //             parse_mode: "HTML",

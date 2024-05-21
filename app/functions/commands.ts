@@ -38,8 +38,8 @@ const start = async (): Promise<void> => {
 			}
 			const userBalance = await checkBalance(userExit['pub'])
 			const balanceFormat = moneyFormat2(userBalance * 1e-9)
-			ctx.session.key = userExit.id
-			ctx.session.value = {
+			ctx.session.userInfo.key = userExit.id
+			ctx.session.userInfo.value = {
 				userName: userExit['userName'],
 				pubkey: userExit['pub'],
 				priKey: userExit['pri'],

@@ -38,7 +38,7 @@ const callbackQuery = async (): Promise<void> => {
 			case 'Sell':
 				try {
 					console.log('用户点击出售')
-					ctx.session = 9
+					// ctx.session = 9
 					ctx.reply('sell')
 				} catch (error) {
 					console.log('用户点击Sell失败', error)

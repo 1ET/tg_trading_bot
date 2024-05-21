@@ -11,9 +11,14 @@ import bot from "./grammy";
 import config from "@configs/config";
 import fs from "fs";
 import localtunnel from "localtunnel";
+import { run } from "@grammyjs/runner";
+
 
 const launchPolling = (): void => {
-	bot.start();
+	let runner = run(bot)
+	const stopRunner = () => runner.isRunning() && runner.stop()
+	process.once("SIGINT", stopRunner)
+	process.once("SIGTERM", stopRunner)
 };
 
 const launchSelfSigned = async (webhookUrl: string, secretPath: string) => {

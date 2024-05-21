@@ -1,11 +1,6 @@
 import { Bot, session, type Context, SessionFlavor } from "grammy"
 import configs from "@configs/config";
-// import stages from "@app/scenes/stage"
-// import { mysqlInstance } from "@app/database/mysql"
-import { mysqlAdapter } from "@app/database/mysqlAdapter/mysqlAdapter"
 import { limit } from "@grammyjs/ratelimiter";
-import { freeStorage } from "@grammyjs/storage-free";
-import { RedisAdapter } from '@grammyjs/storage-redis';
 import { hydrateReply, type ParseModeFlavor } from "@grammyjs/parse-mode";
 import {
     type Conversation,
@@ -14,6 +9,9 @@ import {
     createConversation,
 } from "@grammyjs/conversations"
 import { greetingCvers, buySwapCvers, copyTradeCvers } from "@app/view/conversation"
+import { sequentialize } from "@grammyjs/runner";
+import { RedisAdapter } from "@grammyjs/storage-redis";
+import IORedis from "ioredis";
 
 interface SessionValue {
     userName: string;
@@ -22,15 +20,23 @@ interface SessionValue {
     balance: number;
 }
 
-interface SessionData {
+interface UserInfoDataType {
     key: string;
     value: SessionValue;
+}
+
+interface SessionData {
+    userInfo: UserInfoDataType
 }
 type MyContext = Context & SessionFlavor<SessionData> & ConversationFlavor
 type MyConversation = Conversation<MyContext>;
 const bot = new Bot<ParseModeFlavor<MyContext>>(configs.telegram.token)
 
-function initial(): SessionData {
+function getSessionKey(ctx: Context) {
+    return ctx.chat?.id.toString();
+}
+
+function initial(): UserInfoDataType {
     return {
         key: "1T", value: {
             userName: '1t',
@@ -38,21 +44,30 @@ function initial(): SessionData {
             priKey: "22",
             balance: 0
         }
-    };
+    }
 }
 
-// async function init() {
-// bot.use(session({
-//     initial,
-//     storage: freeStorage<SessionData>(configs.telegram.token)
-// }))
-// bot.use(session())
-// }
-// init()
-bot.use(session({ initial }))
+const redisInstance = new IORedis({
+    port: 6379, // Redis port
+    host: "127.0.0.1", // Redis host
+    password: "ZUBNSFKSeH1s2VYiBj7ckUppnVAxhtqA54/dCpR2MSKnvnh3ZH6GdAyrPhlHI2EUUKJ3m6tJtcTlkWyt",
+});
+const storage = new RedisAdapter({ instance: redisInstance, ttl: 10 });
+bot.use(
+    session({
+        type: "multi",
+        userInfo: {
+            // @ts-ignore
+            // storage,
+            initial,
+            getSessionKey: (ctx) => ctx.chat?.id.toString(),
+        }
+    }),
+)
 bot.use(hydrateReply)
 bot.use(limit())
 bot.use(conversations())
+bot.use(sequentialize(getSessionKey))
 // 对话框
 bot.use(createConversation(greetingCvers))
 bot.use(createConversation(buySwapCvers))
