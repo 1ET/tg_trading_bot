@@ -12,7 +12,8 @@ import { moneyFormat2 } from '@app/utils/index'
 
 const text = async (): Promise<void> => {
 	bot.on("message", async (ctx) => {
-		ctx.replyFmt(fmt`${bold(ctx.update.message.text ?? 'noText')}`)
+		console.log('onmessage')
+		// ctx.replyFmt(fmt`${bold(ctx.update.message.text ?? 'noText')}`)
 	});
 };
 

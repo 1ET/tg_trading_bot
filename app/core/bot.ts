@@ -15,7 +15,7 @@ import { initCrypto } from "@app/crypto/index"
 	await initCrypto()
 	await command.quit();
 	await command.start();
-	await hears.text();
+	// await hears.text();
 	await hears.inlineQuery();
 	await hears.callbackQuery();
 	await command.launch();

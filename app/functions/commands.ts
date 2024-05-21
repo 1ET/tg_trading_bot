@@ -27,7 +27,7 @@ const quit = async (): Promise<void> => {
  */
 const start = async (): Promise<void> => {
 	bot.command('start', async ctx => {
-		console.log('start===>')
+		// console.log('start===>', ctx.from)
 		if (ctx.from) {
 			// 1. 查询数据库是否存在数据
 			// 有数据
@@ -38,8 +38,8 @@ const start = async (): Promise<void> => {
 			}
 			const userBalance = await checkBalance(userExit['pub'])
 			const balanceFormat = moneyFormat2(userBalance * 1e-9)
-			ctx.session.userInfo.key = userExit.id
-			ctx.session.userInfo.value = {
+			ctx.session.key = userExit.id
+			ctx.session.value = {
 				userName: userExit['userName'],
 				pubkey: userExit['pub'],
 				priKey: userExit['pri'],

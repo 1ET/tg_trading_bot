@@ -46,7 +46,34 @@ async function getPoolKeys(baseMint: string, quoteMint: string = "So111111111111
 
 }
 
+async function getCopyStrategy(userID: string) {
+    let querySql = `SELECT * FROM strategy_copy WHERE userId = "${userID}"`
+    const results = await mysqlInstance.query(querySql)
+    if (results[0][0]) {
+        //  存在, 返回查询的数据
+        return results[0]
+    } else {
+        //  不存在,返回 空数组
+        return []
+    }
+}
+
+async function addCopyStrategy(userID: string) {
+    let querySql = `SELECT * FROM strategy_copy WHERE userId = "${userID}"`
+    const results = await mysqlInstance.query(querySql)
+    console.log(results[0][0], '__results__')
+    if (results[0][0]) {
+        //  存在, 返回查询的数据
+        return results[0][0]
+    } else {
+        //  不存在,返回 空数组
+        return false
+    }
+}
+
 export {
     getUserExit,
-    getPoolKeys
+    getPoolKeys,
+    getCopyStrategy,
+    addCopyStrategy
 }

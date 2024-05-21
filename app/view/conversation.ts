@@ -6,8 +6,9 @@ import { buyBox } from '@app/view/messagebox'
 import { buySwapMenu, copyTradLevel1 } from '@app/view/menu'
 import { startBox } from '@app/view/messagebox'
 import { startMenu } from '@app/view/menu'
-import { moneyFormat2 } from '@app/utils/index'
-
+import { moneyFormat2, addressFormat14 } from '@app/utils/index'
+import { getCopyStrategy } from '@app/database/api/api'
+import { bold, fmt, hydrateReply, italic, link } from "@grammyjs/parse-mode";
 
 let language: string = ""
 // Conversation-Cvers
@@ -51,7 +52,7 @@ async function buySwapCvers(conversation: MyConversation, ctx: MyContext) {
             userInputCtx.message?.message_id
         ])
         // 查询池子获取token信息,并返回购买菜单
-        await ctx.editMessageText(buyBox(dexQuery[0], ctx.session.userInfo.value), {
+        await ctx.editMessageText(buyBox(dexQuery[0], ctx.session.value), {
             parse_mode: "HTML",
             reply_markup: {
                 inline_keyboard:
@@ -72,8 +73,8 @@ async function refreshBuySwap(conversation, ctx, dexQuery, message) {
     const response = await conversation.waitForCallbackQuery(["Back", "Refresh_Swap"]);
     if (response.match === "Back") {
         const startBoxParams = {
-            pub: ctx.session.userInfo.value.pubkey,
-            balance: moneyFormat2(ctx.session.userInfo.value.balance * 1e-9)
+            pub: ctx.session.value.pubkey,
+            balance: moneyFormat2(ctx.session.value.balance * 1e-9)
         }
         await ctx.editMessageText(startBox(startBoxParams), {
             parse_mode: "HTML",
@@ -90,7 +91,7 @@ async function refreshBuySwap(conversation, ctx, dexQuery, message) {
         tempData.fdv = 0
         tempData.priceChange.h1 = 0
         tempData.priceChange.h24 = 0
-        await ctx.editMessageText(buyBox(tempData, ctx.session.userInfo.value), {
+        await ctx.editMessageText(buyBox(tempData, ctx.session.value), {
             parse_mode: "HTML",
             reply_markup: {
                 inline_keyboard:
@@ -99,7 +100,7 @@ async function refreshBuySwap(conversation, ctx, dexQuery, message) {
         })
         const Refresh_Swap_DexQuery = await checkTokenInfo(message?.text ?? '')
         console.log('用户点击刷新')
-        await ctx.editMessageText(buyBox(Refresh_Swap_DexQuery[0], ctx.session.userInfo.value), {
+        await ctx.editMessageText(buyBox(Refresh_Swap_DexQuery[0], ctx.session.value), {
             parse_mode: "HTML",
             reply_markup: {
                 inline_keyboard:
@@ -112,11 +113,39 @@ async function refreshBuySwap(conversation, ctx, dexQuery, message) {
 
 }
 
+interface CopyStrage {
+    userId: string,
+    copyStrage?: {
+        buyGas: string,
+        maxMcap: string,
+        minMcap: string,
+        sellGas: string,
+        copySell: string,
+        slippage: string,
+        buyPercen: string,
+        minLiquidity: string,
+        targetWallet: string
+    },
+    idx?: number,
+    isPaused: number
+}
+
 async function copyTradeCvers(conversation: MyConversation, ctx: MyContext) {
     language = 'English'
-    let replyCtx
+    // @ts-ignore
+    let userStrage: CopyStrage[] = await getCopyStrategy((ctx.from?.id ?? "").toString())
+    // let strageArray = userStrage.copyStrage
+    // 拼接字符串
+    console.log("userStrage===>", userStrage)
+    let userStrageStr = ''
+    if (userStrage) {
+        userStrage.forEach((item, index) => {
+            userStrageStr += `\n${item.isPaused ? "🟢" : "🟠"} Copy${index} — <code>${addressFormat14(item.copyStrage?.targetWallet ?? "")}</code> <a href="https://solscan.io/account/${item.copyStrage?.targetWallet ?? ""}">🅴</a>`
+        })
+    }
+    console.log('copyTradeCvers===>', userStrageStr)
     await ctx.editMessageText(
-        `Copy Trade\n\nCopy Trade allows you to copy the buys and sells of any target wallet. \n🟢 Indicates a copy trade setup is active.\n🟠 Indicates a copy trade setup is paused.`,
+        `<b>Copy Trade</b>\n\nCopy Trade allows you to copy the buys and sells of any target wallet. \n🟢 Indicates a copy trade setup is active.\n🟠 Indicates a copy trade setup is paused.\n ${userStrageStr}`,
         {
             parse_mode: "HTML",
             reply_markup: {
@@ -126,18 +155,9 @@ async function copyTradeCvers(conversation: MyConversation, ctx: MyContext) {
         }
     )
     const response = await conversation.waitForCallbackQuery(["NewCopy", "PauseAllCopy", "CopyTradeBack"])
+    console.log('response.match', response.match)
     if (response.match === "NewCopy") {
-        // const startBoxParams = {
-        //     pub: ctx.session.userInfo.value.pubkey,
-        //     balance: moneyFormat2(ctx.session.userInfo.value.balance * 1e-9)
-        // }
-        // await ctx.editMessageText(startBox(startBoxParams), {
-        //     parse_mode: "HTML",
-        //     reply_markup: {
-        //         inline_keyboard:
-        //             startMenu
-        //     }
-        // })
+
         await ctx.editMessageText(`To setup a new Copy Trade:
 - Assign a unique name or “tag” to your target wallet, to make it easier to identify.
 - Enter the target wallet address to copy trade.
@@ -170,8 +190,8 @@ To manage your Copy Trade:
 //     const response = await conversation.waitForCallbackQuery(["NewCopy", "Refresh_Swap"]);
 //     if (response.match === "Back") {
 //         const startBoxParams = {
-//             pub: ctx.session.userInfo.value.pubkey,
-//             balance: moneyFormat2(ctx.session.userInfo.value.balance * 1e-9)
+//             pub: ctx.session.value.pubkey,
+//             balance: moneyFormat2(ctx.session.value.balance * 1e-9)
 //         }
 //         await ctx.editMessageText(startBox(startBoxParams), {
 //             parse_mode: "HTML",

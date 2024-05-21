@@ -10,6 +10,13 @@ function moneyFormat2(money) {
     return money
 }
 
+function addressFormat14(address: string) {
+    let frontStr = address.slice(0, 7)
+    let back = address.slice(address.length - 7)
+    return frontStr + "..." + back
+}
+
 export {
-    moneyFormat2
+    moneyFormat2,
+    addressFormat14
 }

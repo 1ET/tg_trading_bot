@@ -16,7 +16,10 @@ import { run } from "@grammyjs/runner";
 
 const launchPolling = (): void => {
 	let runner = run(bot)
-	const stopRunner = () => runner.isRunning() && runner.stop()
+	const stopRunner = () => {
+		console.log('launchPolling===>退出')
+		runner.isRunning() && runner.stop()
+	}
 	process.once("SIGINT", stopRunner)
 	process.once("SIGTERM", stopRunner)
 };

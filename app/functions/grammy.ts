@@ -13,20 +13,15 @@ import { sequentialize } from "@grammyjs/runner";
 import { RedisAdapter } from "@grammyjs/storage-redis";
 import IORedis from "ioredis";
 
+interface SessionData {
+    key: string;
+    value: SessionValue;
+}
 interface SessionValue {
     userName: string;
     pubkey: string;
     priKey: string;
     balance: number;
-}
-
-interface UserInfoDataType {
-    key: string;
-    value: SessionValue;
-}
-
-interface SessionData {
-    userInfo: UserInfoDataType
 }
 type MyContext = Context & SessionFlavor<SessionData> & ConversationFlavor
 type MyConversation = Conversation<MyContext>;
@@ -36,7 +31,7 @@ function getSessionKey(ctx: Context) {
     return ctx.chat?.id.toString();
 }
 
-function initial(): UserInfoDataType {
+function initial(): SessionData {
     return {
         key: "1T", value: {
             userName: '1t',
@@ -55,19 +50,14 @@ const redisInstance = new IORedis({
 const storage = new RedisAdapter({ instance: redisInstance, ttl: 10 });
 bot.use(
     session({
-        type: "multi",
-        userInfo: {
-            // @ts-ignore
-            // storage,
-            initial,
-            getSessionKey: (ctx) => ctx.chat?.id.toString(),
-        }
+        storage,
+        initial,
     }),
 )
 bot.use(hydrateReply)
 bot.use(limit())
 bot.use(conversations())
-bot.use(sequentialize(getSessionKey))
+// bot.use(sequentialize(getSessionKey))
 // 对话框
 bot.use(createConversation(greetingCvers))
 bot.use(createConversation(buySwapCvers))
