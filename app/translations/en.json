@@ -10,13 +10,31 @@
 		"buy": "Buy",
 		"sell": "Sell",
 		"position": "Position",
-		"limit": "Limit",
+		"copyTrade": "Copy Trade",
 		"sniper": "LP Sniper",
 		"setting": "Srttings",
 		"referrals": "Referrals",
 		"withdraw": "Withdraw",
 		"help": "Help",
 		"refresh": "Refresh"
+	},
+	"copyTrade": {
+		"new": "➕ New",
+		"pauseAll": "Pause All",
+		"back": "⬅ Back"
+	},
+	"newCopyTrade": {
+		"target": "Target Wallet",
+		"buyAmount": "Buy Percentage",
+		"copySell": "Copy Sell",
+		"buyGas": "Buy Gas",
+		"sellGas": "Sell Gas",
+		"slippage": "Slippage",
+		"minLiquidity": "Min Liquidity",
+		"minMcap": "Min Mcap",
+		"maxMcap": "Min Mcap",
+		"add": "➕ Add",
+		"back": "back"
 	},
 	"buyCoinTip": "Enter a token symbol or address to buy",
 	"language": "Welcome to the RΞSPECT Bot! 😄\n🤖Customize your meme trades with our bot! \n🚀Whether it's a bullish run or a bearish slide📉\n<b>💥You'll catch it!</b> \n🤔️No need to constantly watch the market's ups and downs. \n💼Let us handle it for you!\n\nJust follow me:\nStep 1: Network Selection(Default NEOEVM)\nStep 2: click Import Wallet or Generate Wallet\nStep 3: choose a Wallet to operate\n",

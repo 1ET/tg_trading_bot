@@ -13,7 +13,7 @@ import {
     conversations,
     createConversation,
 } from "@grammyjs/conversations"
-import { greetingCvers, buySwapCvers } from "@app/view/conversation"
+import { greetingCvers, buySwapCvers, copyTradeCvers } from "@app/view/conversation"
 
 interface SessionValue {
     userName: string;
@@ -56,7 +56,7 @@ bot.use(conversations())
 // 对话框
 bot.use(createConversation(greetingCvers))
 bot.use(createConversation(buySwapCvers))
-// bot.use(createConversation(greeting))
+bot.use(createConversation(copyTradeCvers))
 
 bot.api.setMyCommands([
     { command: "start", description: "Start the bot" },

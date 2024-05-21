@@ -54,9 +54,12 @@ const callbackQuery = async (): Promise<void> => {
 
 				break;
 			case 'Limit':
-				console.log(ctx.session)
 				console.log('用户点击限价单')
 				ctx.reply('Limit')
+				break;
+			case 'CopyTrade':
+				console.log('用户点击跟单')
+				await ctx.conversation.enter("copyTradeCvers")
 				break;
 			case 'Sniper':
 				console.log('用户点击狙击')

@@ -9,7 +9,7 @@ const startMenu = [
     ],
     [
         { text: language === "English" ? translations.en.startMenu.position : translations.zh.startMenu.position, callback_data: 'Position' },
-        { text: language === "English" ? translations.en.startMenu.limit : translations.zh.startMenu.limit, callback_data: 'Limit' },
+        { text: language === "English" ? translations.en.startMenu.copyTrade : translations.zh.startMenu.copyTrade, callback_data: 'CopyTrade' },
         { text: language === "English" ? translations.en.startMenu.sniper : translations.zh.startMenu.sniper, callback_data: 'Sniper' },
     ],
     [
@@ -48,7 +48,37 @@ const buySwapMenu = [
     ]
 ]
 
+const copyTradLevel1 = () => {
+    return [
+        [
+            { text: language === "English" ? translations.en.copyTrade.new : translations.zh.copyTrade.new, callback_data: 'NewCopy' },
+        ],
+        [
+            { text: language === "English" ? translations.en.copyTrade.pauseAll : translations.zh.copyTrade.pauseAll, callback_data: 'PauseAllCopy' },
+        ],
+        [
+            { text: language === "English" ? translations.en.copyTrade.back : translations.zh.copyTrade.back, callback_data: 'CopyTradeBack' },
+        ],
+    ]
+}
+
+const addTradeMenu = () => {
+    return [
+        [
+            { text: language === "English" ? translations.en.copyTrade.new : translations.zh.copyTrade.new, callback_data: 'NewCopy' },
+        ],
+        [
+            { text: language === "English" ? translations.en.copyTrade.pauseAll : translations.zh.copyTrade.pauseAll, callback_data: 'PauseAllCopy' },
+        ],
+        [
+            { text: language === "English" ? translations.en.copyTrade.back : translations.zh.copyTrade.back, callback_data: 'CopyTradeBack' },
+        ],
+    ]
+}
+
+
 export {
     startMenu,
-    buySwapMenu
+    buySwapMenu,
+    copyTradLevel1
 }
