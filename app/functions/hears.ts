@@ -54,13 +54,21 @@ const callbackQuery = async (): Promise<void> => {
 				}
 
 				break;
+			case 'Target':
+				console.log('用户点击Target')
+				await ctx.conversation.enter("copyTraderListTargetCvers")
+				break;
 			case 'Limit':
 				console.log('用户点击限价单')
 				ctx.reply('Limit')
 				break;
 			case 'CopyTrade':
-				console.log('用户点击跟单')
+				console.log('用户点击跟单', ctx.conversation)
 				await ctx.conversation.enter("copyTradeCvers")
+				break;
+			case 'NewCopy':
+				console.log('用户点击NewCopy')
+				await ctx.conversation.enter("copyTraderListCvers")
 				break;
 			case 'Sniper':
 				console.log('用户点击狙击')
@@ -80,8 +88,11 @@ const callbackQuery = async (): Promise<void> => {
 				break;
 			case 'Help':
 				console.log('用户点击帮助-help弹窗')
-				await ctx.conversation.enter("greetingCvers")
-				// ctx.reply('Help')
+				ctx.answerCallbackQuery('Help')
+				break;
+			case 'help':
+				console.log('用户点击帮助-help弹窗')
+				ctx.answerCallbackQuery('Help')
 				break;
 			case 'Refresh':
 				console.log('用户点击首页帮助')
@@ -102,45 +113,49 @@ const callbackQuery = async (): Promise<void> => {
 			// 		}
 			// 	})
 			// 	break;
+			case 'PauseAllCopy':
+				console.log('用户点击PauseAllCopy')
+				ctx.answerCallbackQuery('PauseAllCopy')
+				break;
 			case 'a_swap':
 				console.log('用户点击交易')
-				ctx.answerCbQuery('a_swap')
+				ctx.answerCallbackQuery('a_swap')
 				break;
 			case 'a_limit':
 				console.log('用户点击限价单')
-				ctx.answerCbQuery('a_limit')
+				ctx.answerCallbackQuery('a_limit')
 				break;
 			case 'solhalf':
 				console.log('用户点击买入0.5 sol')
-				ctx.answerCbQuery('solhalf')
+				ctx.answerCallbackQuery('solhalf')
 				break;
 			case 'solhalf':
 				console.log('用户点击买入0.5 sol')
-				ctx.answerCbQuery('solhalf')
+				ctx.answerCallbackQuery('solhalf')
 				break;
 			case 'sol_1':
 				console.log('用户点击买入1 sol')
-				ctx.answerCbQuery('sol_1')
+				ctx.answerCallbackQuery('sol_1')
 				break;
 			case 'sol_3':
 				console.log('用户点击买入3 sol')
-				ctx.answerCbQuery('sol_3')
+				ctx.answerCallbackQuery('sol_3')
 				break;
 			case 'sol_custom':
 				console.log('用户点击自定义数量')
-				ctx.answerCbQuery('sol_custom')
+				ctx.answerCallbackQuery('sol_custom')
 				break;
 			case 'slippage':
 				console.log('用户点击滑点')
-				ctx.answerCbQuery('15% slippage')
+				ctx.answerCallbackQuery('15% slippage')
 				break;
 			case 'slippage_custom':
 				console.log('用户点击自定义滑点')
-				ctx.answerCbQuery('x slippage_custom')
+				ctx.answerCallbackQuery('x slippage_custom')
 				break;
 
 			default:
-				ctx.answerCbQuery('default')
+				ctx.answerCallbackQuery('default')
 				break;
 		}
 	});

@@ -1,4 +1,4 @@
-import { Bot, session, type Context, SessionFlavor } from "grammy"
+import { Bot, session, type Context, SessionFlavor, GrammyError, HttpError } from "grammy"
 import configs from "@configs/config";
 import { limit } from "@grammyjs/ratelimiter";
 import { hydrateReply, type ParseModeFlavor } from "@grammyjs/parse-mode";
@@ -8,7 +8,7 @@ import {
     conversations,
     createConversation,
 } from "@grammyjs/conversations"
-import { greetingCvers, buySwapCvers, copyTradeCvers } from "@app/view/conversation"
+import { greetingCvers, buySwapCvers, copyTradeCvers, copyTraderListCvers, copyTraderListTargetCvers } from "@app/view/conversation"
 import { sequentialize } from "@grammyjs/runner";
 import { RedisAdapter } from "@grammyjs/storage-redis";
 import IORedis from "ioredis";
@@ -62,6 +62,8 @@ bot.use(conversations())
 bot.use(createConversation(greetingCvers))
 bot.use(createConversation(buySwapCvers))
 bot.use(createConversation(copyTradeCvers))
+bot.use(createConversation(copyTraderListCvers))
+bot.use(createConversation(copyTraderListTargetCvers))
 
 bot.api.setMyCommands([
     { command: "start", description: "Start the bot" },
@@ -73,7 +75,13 @@ bot.catch((err) => {
     const ctx = err.ctx;
     console.error(`Error while handling update ${ctx.update.update_id}:`);
     const e = err.error;
-    console.log(`Some error was catch: `, e);
+    if (e instanceof GrammyError) {
+        console.error("Error in request:", e.description);
+    } else if (e instanceof HttpError) {
+        console.error("Could not contact Telegram:", e);
+    } else {
+        console.error("Unknown error:", e);
+    }
 })
 
 export { bot, type MyConversation, type MyContext };

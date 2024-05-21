@@ -1,4 +1,5 @@
 import translations from '@app/routes/translations'
+import { moneyFormat2, addressFormat14 } from '@app/utils/index'
 
 const language = "English"
 
@@ -62,16 +63,30 @@ const copyTradLevel1 = () => {
     ]
 }
 
-const addTradeMenu = () => {
+const addTradeMenu = (tradeSetting) => {
     return [
+        // [
+        //     { text: language === "English" ? translations.en.newCopyTrade.tag : translations.zh.newCopyTrade.tag, callback_data: 'NewCopy' },
+        // ],
         [
-            { text: language === "English" ? translations.en.copyTrade.new : translations.zh.copyTrade.new, callback_data: 'NewCopy' },
+            { text: (language === "English" ? translations.en.newCopyTrade.target : translations.zh.newCopyTrade.target) + `: ${addressFormat14(tradeSetting.target)}`, callback_data: 'Target' },
         ],
         [
-            { text: language === "English" ? translations.en.copyTrade.pauseAll : translations.zh.copyTrade.pauseAll, callback_data: 'PauseAllCopy' },
+            { text: (language === "English" ? translations.en.newCopyTrade.buyAmount : translations.zh.newCopyTrade.buyAmount) + `: ${tradeSetting.buyAmount}`, callback_data: 'BuyAmount' },
+            { text: (language === "English" ? translations.en.newCopyTrade.copySell : translations.zh.newCopyTrade.copySell) + `: ${tradeSetting.copySell ? "✅ Yes" : "❌ No"}` , callback_data: 'CopySell' },
         ],
         [
-            { text: language === "English" ? translations.en.copyTrade.back : translations.zh.copyTrade.back, callback_data: 'CopyTradeBack' },
+            { text: (language === "English" ? translations.en.newCopyTrade.buyGas : translations.zh.newCopyTrade.buyGas) + `: ${tradeSetting.buyGas}`, callback_data: 'BuyGas' },
+            { text: (language === "English" ? translations.en.newCopyTrade.sellGas : translations.zh.newCopyTrade.sellGas) + `: ${tradeSetting.sellGas}`, callback_data: 'SellGas' },
+        ],
+        [
+            { text: (language === "English" ? translations.en.newCopyTrade.slippage : translations.zh.newCopyTrade.slippage) + `: ${tradeSetting.slippage}`, callback_data: 'Slippage' },
+        ],
+        [
+            { text: language === "English" ? translations.en.newCopyTrade.add : translations.zh.newCopyTrade.add, callback_data: 'Add' },
+        ],
+        [
+            { text: language === "English" ? translations.en.newCopyTrade.back : translations.zh.newCopyTrade.back, callback_data: 'Back' },
         ],
     ]
 }
@@ -80,5 +95,6 @@ const addTradeMenu = () => {
 export {
     startMenu,
     buySwapMenu,
-    copyTradLevel1
+    copyTradLevel1,
+    addTradeMenu
 }

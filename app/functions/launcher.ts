@@ -1,13 +1,5 @@
-/**
- * Launcher
- * =====================
- *
- * @contributors: Francesco Maida [@edge33] <francescomaida91@gmail.com> (https://edge33.github.io)
- *
- * @license: MIT License
- *
- */
 import bot from "./grammy";
+
 import config from "@configs/config";
 import fs from "fs";
 import localtunnel from "localtunnel";

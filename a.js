@@ -1,59 +1,72 @@
-// [
-// 	{
-// 		"targetWallet": "ABCXAXADADA",
-// 		"buyPercen": "50%",
-// 		"copySell": "true",
-// 		"buyGas": "0.0015",
-// 		"sellGas": "0.0015",
-// 		"slippage": "15",
-// 		"minLiquidity": "100",
-// 		"minMcap": "0",
-// 		"maxMcap": "10000"
-// 	},
-// 	{
-// 		"targetWallet": "ABCXAXACCCC",
-// 		"buyPercen": "50%",
-// 		"copySell": "true",
-// 		"buyGas": "0.0015",
-// 		"sellGas": "0.0015",
-// 		"slippage": "15",
-// 		"minLiquidity": "100",
-// 		"minMcap": "0",
-// 		"maxMcap": "10000"
-// 	}
-// ]
-
-[
-	{
-		userId: "5340665667",
-		copyStrage: {
-			buyGas: "0.0015",
-			maxMcap: "10000",
-			minMcap: "0",
-			sellGas: "0.0015",
-			copySell: "true",
-			slippage: "15",
-			buyPercen: "50%",
-			minLiquidity: "100",
-			targetWallet: "ABCXAXADADA",
-		},
-		idx: 1,
-		isPaused: 1,
-	},
-	{
-		userId: "5340665667",
-		copyStrage: {
-			buyGas: "0.0015",
-			maxMcap: "10000",
-			minMcap: "0",
-			sellGas: "0.0015",
-			copySell: "true",
-			slippage: "15",
-			buyPercen: "50%",
-			minLiquidity: "100",
-			targetWallet: "DDDDDDDDDDDCCCCCCCAAAAAAA",
-		},
-		idx: 3,
-		isPaused: 0,
-	},
-];
+{
+  ctx: Context {
+    update: { update_id: 719477200, callback_query: [Object] },
+    api: Api { raw: {}, config: [Object] },
+    me: {
+      id: 6842799885,
+      is_bot: true,
+      first_name: 'solana-bot-1t',
+      username: 'Solana1T_bot',
+      can_join_groups: true,
+      can_read_all_group_messages: false,
+      supports_inline_queries: false,
+      can_connect_to_business: false
+    },
+    session: [Getter/Setter],
+    replyFmt: [Function (anonymous)],
+    replyWithHTML: [Function (anonymous)],
+    replyWithMarkdown: [Function (anonymous)],
+    replyWithMarkdownV1: [Function (anonymous)],
+    replyWithMarkdownV2: [Function (anonymous)],
+    replyFmtWithPhoto: [Function (anonymous)],
+    replyFmtWithMediaGroup: [Function (anonymous)],
+    editFmtMessageMedia: [Function (anonymous)],
+    editFmtMessageText: [Function (anonymous)],
+    conversation: ConversationControls {
+      enter: [AsyncFunction (anonymous)],
+      [Symbol(conversations)]: [Object]
+    },
+    match: '_PauseAllCopy'
+  },
+  data: { log: { u: [Array] }, last: 1716303787477 },
+  rsr: {
+    value: undefined,
+    isResolved: [Function: isResolved],
+    resolve: [Function (anonymous)],
+    promise: Promise { <pending> }
+  },
+  timeout: undefined,
+  replayIndex: { wait: 3 },
+  active: true,
+  mw: Composer { handler: [Function: pass] },
+  form: ConversationForm { conversation: [Circular *1] },
+  currentCtx: Context {
+    update: { update_id: 719477200, callback_query: [Object] },
+    api: Api { raw: {}, config: [Object] },
+    me: {
+      id: 6842799885,
+      is_bot: true,
+      first_name: 'solana-bot-1t',
+      username: 'Solana1T_bot',
+      can_join_groups: true,
+      can_read_all_group_messages: false,
+      supports_inline_queries: false,
+      can_connect_to_business: false
+    },
+    session: [Getter/Setter],
+    replyFmt: [Function (anonymous)],
+    replyWithHTML: [Function (anonymous)],
+    replyWithMarkdown: [Function (anonymous)],
+    replyWithMarkdownV1: [Function (anonymous)],
+    replyWithMarkdownV2: [Function (anonymous)],
+    replyFmtWithPhoto: [Function (anonymous)],
+    replyFmtWithMediaGroup: [Function (anonymous)],
+    editFmtMessageMedia: [Function (anonymous)],
+    editFmtMessageText: [Function (anonymous)],
+    conversation: ConversationControls {
+      enter: [AsyncFunction (anonymous)],
+      [Symbol(conversations)]: [Object]
+    },
+    match: '_PauseAllCopy'
+  }
+}

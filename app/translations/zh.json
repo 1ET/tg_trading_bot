@@ -24,6 +24,7 @@
 		"back": "⬅ 返回"
 	},
 	"newCopyTrade": {
+		"tag": "Tag",
 		"target": "Target Wallet",
 		"buyAmount": "Buy Percentage",
 		"copySell": "Copy Sell",

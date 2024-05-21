@@ -58,8 +58,8 @@ async function getCopyStrategy(userID: string) {
     }
 }
 
-async function addCopyStrategy(userID: string) {
-    let querySql = `SELECT * FROM strategy_copy WHERE userId = "${userID}"`
+async function addCopyStrategy(userID: string, strategy:any) {
+    let querySql = `INSERT INTO strategy_copy (userId, copyStrage, idx, isPaused) VALUES ('${userID}', '{"buyGas":"${strategy.buyGas}","maxMcap":"${strategy.buyGas}","minMcap":"0","sellGas":"0.0015","copySell":"true","slippage":"15","buyPercen":"50%","minLiquidity":"100","targetWallet":"DF3VuGBJZGe7ZcjwmNNXUdg1DGsKnHk4baxho17Vq1RZ"}', null, 1);`
     const results = await mysqlInstance.query(querySql)
     console.log(results[0][0], '__results__')
     if (results[0][0]) {
