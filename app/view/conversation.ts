@@ -8,7 +8,7 @@ import { startBox } from '@app/view/messagebox'
 import { InlineKeyboard } from 'grammy'
 import { startMenu } from '@app/view/menu'
 import { moneyFormat2, addressFormat14 } from '@app/utils/index'
-import { getCopyStrategy, addCopyStrategy } from '@app/database/api/api'
+import { getCopyStrategy } from '@app/database/api/api'
 
 let language: string = ""
 // Conversation-Cvers
@@ -149,27 +149,25 @@ const addTradeMenuKeybord = (params = {}) => {
     return keyboard
 }
 
-async function getStage(id) {
-    return await getCopyStrategy((id).toString())
-}
-
+// 用户在首页点击跟单列表页面
 async function copyTradeCvers(conversation: MyConversation, ctx: MyContext) {
     language = 'English'
     // @ts-ignore
-    let userStrage: CopyStrage[] = await getStage(ctx.from?.id ?? "")
+    let userStrage: CopyStrage[] = await getCopyStrategy(ctx.from?.id ?? "")
     let userStrageStr = ''
     if (userStrage) {
         userStrage.forEach((item, index) => {
             userStrageStr += `\n${item.isPaused ? "🟢" : "🟠"} Copy${index} — <code>${addressFormat14(item.copyStrage?.targetWallet ?? "")}</code> <a href="https://solscan.io/account/${item.copyStrage?.targetWallet ?? ""}">🅴</a>`
         })
     }
-    let tempCtx = await ctx.editMessageText(
+    await ctx.editMessageText(
         `<b>Copy Trade</b>\n\nCopy Trade allows you to copy the buys and sells of any target wallet. \n🟢 Indicates a copy trade setup is active.\n🟠 Indicates a copy trade setup is paused.\n ${userStrageStr}`,
         {
             parse_mode: "HTML",
             reply_markup: copyTradLevel1Keyboard()
         }
     )
+    return
     const response = await conversation.waitForCallbackQuery(["PauseAllCopy", "CopyTradeBack"])
 
     // const response = await conversation.waitForCallbackQuery(["NewCopy", "PauseAllCopy", "CopyTradeBack"])
@@ -180,7 +178,6 @@ async function copyTradeCvers(conversation: MyConversation, ctx: MyContext) {
         // await editCopyTrader(ctx, conversation, editMenu, container)
         // NewCopy进入
 
-        // return await copyTraderListCvers(conversation, ctx)
         // await editCopyTrader(ctx, conversation, editMenu)
     } else if (response.match === "PauseAllCopy") {
 
@@ -192,130 +189,59 @@ async function copyTradeCvers(conversation: MyConversation, ctx: MyContext) {
     return
 }
 
-async function copyTraderListCvers(conversation: MyConversation, ctx: MyContext) {
-    try {
-        console.log('=copyTraderListCvers=')
-        await ctx.editMessageText(translations.en.addTargetTip, {
-            parse_mode: "HTML",
-            reply_markup: addTradeMenuKeybord()
-        })
-        // let newCopyResponse = await conversation.waitForCallbackQuery(["Target", "BuyAmount", "CopySell", "BuyGas", "SellGas", "Slippage", "Add", "Back"]);
-        let newCopyResponse = await conversation.waitForCallbackQuery(["BuyAmount", "CopySell", "BuyGas", "SellGas", "Slippage", "Add", "Back"]);
-        let editMenu = {
-            target: "",
-            buyAmount: "100%",
-            copySell: 1,
-            buyGas: "0.0015 SOL",
-            sellGas: "0.0015 SOL",
-            slippage: "15%",
-        }
-        console.log('newCopyResponse.match', newCopyResponse.match)
-        let replyCtx
-        switch (newCopyResponse.match) {
-            case "Target":
-                switch (language) {
-                    case "English":
-                        replyCtx = await ctx.reply("Enter the target wallet address to copy trade");
-                        break;
-                    case "Chinese":
-                        replyCtx = await ctx.reply("Enter the target wallet address to copy trade");
-                        break;
-                    default:
-                        break;
-                }
-                // 需要做校验
-                let userInputCtx = await conversation.wait()
-                const { message } = userInputCtx
-                await ctx.answerCallbackQuery('You cannot copy trade to your own wallet.')
-                // 删除前两条消息-终止
-                console.log('重新进入')
-                // await conversation._replayExt()
-                const _logExt = await conversation._logExt()
-                console.log("_logExt===>", _logExt)
-                await conversation._resolveAt(0)
-                // if (editMenu.target === message?.text.trim()) {
-                //     console.log('无操作返回')
-                //     await ctx.deleteMessages([
-                //         replyCtx.message_id,
-                //         userInputCtx.message?.message_id
-                //     ])
-                // } else if (message?.text.trim() === ctx.session.value.pubkey) {
-                //     console.log('相同token提示')
-                //     await ctx.deleteMessages([
-                //         replyCtx.message_id,
-                //         userInputCtx.message?.message_id
-                //     ])
-                //     await ctx.answerCallbackQuery('You cannot copy trade to your own wallet.')
-                //     await conversation.wait();
-                // } else {
-                //     console.log('不同数据加入数据库')
-                //     editMenu.target = message?.text.trim()
-                //     await ctx.deleteMessages([
-                //         replyCtx.message_id,
-                //         userInputCtx.message?.message_id
-                //     ])
-                //     await ctx.editMessageText(translations.en.addTargetTip, {
-                //         parse_mode: "HTML",
-                //         // reply_markup: addTradeMenuKeybord()
-                //         reply_markup: {
-                //             inline_keyboard:
-                //                 addTradeMenu(editMenu)
-                //         }
-                //     })
-
-                // }
-                break;
-            case "BuyAmount":
-                console.log("BuyAmount")
-
-                break;
-            case "CopySell":
-                console.log("CopySell")
-
-                break;
-            case "BuyGas":
-                console.log("BuyGas")
-
-                break;
-            case "SellGas":
-                console.log("SellGas")
-
-                break;
-            case "Slippage":
-                console.log("Slippage")
-
-                break;
-            case "Add":
-                console.log("Add")
-                if (!editMenu.target) {
-                    await ctx.answerCallbackQuery('Add a wallet to copy trade before creating.')
-                } else {
-                    let addStrategyResult = await addCopyStrategy(ctx.session.key, editMenu)
-                    console.log('addStrategyResult====>', addStrategyResult)
-                    await ctx.conversation.enter("copyTradeCvers")
-                }
-                return
-                break;
-            case "Back":
-                console.log("Back")
-
-                break;
-
-            default:
-                break;
-                console.log('停止执行')
-        }
-        return
-    } catch (error) {
-
-    }
-}
-
 async function copyTraderListTargetCvers(conversation: MyConversation, ctx: MyContext) {
-    await ctx.reply("Enter the target wallet address to copy trade")
+    let editMenu = {
+        add: '',
+        target: "",
+        buyAmount: "100%",
+        copySell: 1,
+        buyGas: "0.0015 SOL",
+        sellGas: "0.0015 SOL",
+        slippage: "15%",
+    }
+    let replyCtx = await ctx.reply("Enter the target wallet address to copy trade")
     let userInputCtx = await conversation.wait()
+    //     差一个校验-如果是自己的账户就不做操作
+    // await new Promise<never | void>(async (resolve, reject) => {
+    //     console.log('__Promise__', userInputCtx.message?.text)
+    //     const { message } = userInputCtx
+    //     console.log('__message__', message?.text)
+    //     if (editMenu.target === message?.text?.trim()) {
+    //         console.log('无操作返回')
+    //         await ctx.deleteMessages([
+    //             replyCtx.message_id,
+    //             userInputCtx.message?.message_id ?? -1
+    //         ])
+    //     } else if (message?.text?.trim() === ctx.session.value.pubkey) {
+    //         console.log('相同token提示')
+    //         await ctx.deleteMessages([
+    //             replyCtx.message_id,
+    //             userInputCtx.message?.message_id ?? -1
+    //         ])
+    //         await ctx.answerCallbackQuery('You cannot copy trade to your own wallet.')
+    //         await conversation.wait();
+    //     } else (
+    //         resolve()
+    //     )
+    // })
     const { message } = userInputCtx
-    await ctx.answerCallbackQuery('You cannot copy trade to your own wallet.')
+    console.log('不同数据加入数据库-存入到add参数中', ctx.callbackQuery?.message?.message_id)
+
+    editMenu.target = message?.text?.trim() ?? ""
+    // 还需要把上一个卡片删除掉
+    await ctx.deleteMessages([
+        ctx.callbackQuery?.message?.message_id ?? -1,
+        replyCtx.message_id,
+        userInputCtx.message?.message_id ?? -1
+    ])
+    editMenu.add = '-' + message?.text?.trim() ?? ""
+    await ctx.reply(translations.en.addTargetTip, {
+        parse_mode: "HTML",
+        reply_markup: {
+            inline_keyboard:
+                addTradeMenu(editMenu)
+        }
+    })
     return
 }
 
@@ -323,6 +249,5 @@ export {
     greetingCvers,
     buySwapCvers,
     copyTradeCvers,
-    copyTraderListCvers,
     copyTraderListTargetCvers
 }

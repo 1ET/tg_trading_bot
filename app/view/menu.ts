@@ -73,7 +73,7 @@ const addTradeMenu = (tradeSetting) => {
         ],
         [
             { text: (language === "English" ? translations.en.newCopyTrade.buyAmount : translations.zh.newCopyTrade.buyAmount) + `: ${tradeSetting.buyAmount}`, callback_data: 'BuyAmount' },
-            { text: (language === "English" ? translations.en.newCopyTrade.copySell : translations.zh.newCopyTrade.copySell) + `: ${tradeSetting.copySell ? "✅ Yes" : "❌ No"}` , callback_data: 'CopySell' },
+            { text: (language === "English" ? translations.en.newCopyTrade.copySell : translations.zh.newCopyTrade.copySell) + `: ${tradeSetting.copySell ? "✅ Yes" : "❌ No"}`, callback_data: 'CopySell' },
         ],
         [
             { text: (language === "English" ? translations.en.newCopyTrade.buyGas : translations.zh.newCopyTrade.buyGas) + `: ${tradeSetting.buyGas}`, callback_data: 'BuyGas' },
@@ -83,7 +83,7 @@ const addTradeMenu = (tradeSetting) => {
             { text: (language === "English" ? translations.en.newCopyTrade.slippage : translations.zh.newCopyTrade.slippage) + `: ${tradeSetting.slippage}`, callback_data: 'Slippage' },
         ],
         [
-            { text: language === "English" ? translations.en.newCopyTrade.add : translations.zh.newCopyTrade.add, callback_data: 'Add' },
+            { text: language === "English" ? translations.en.newCopyTrade.add : translations.zh.newCopyTrade.add, callback_data: 'Add' + tradeSetting.add },
         ],
         [
             { text: language === "English" ? translations.en.newCopyTrade.back : translations.zh.newCopyTrade.back, callback_data: 'Back' },

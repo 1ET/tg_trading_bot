@@ -8,7 +8,7 @@ import {
     conversations,
     createConversation,
 } from "@grammyjs/conversations"
-import { greetingCvers, buySwapCvers, copyTradeCvers, copyTraderListCvers, copyTraderListTargetCvers } from "@app/view/conversation"
+import { greetingCvers, buySwapCvers, copyTradeCvers, copyTraderListTargetCvers } from "@app/view/conversation"
 import { sequentialize } from "@grammyjs/runner";
 import { RedisAdapter } from "@grammyjs/storage-redis";
 import IORedis from "ioredis";
@@ -62,7 +62,6 @@ bot.use(conversations())
 bot.use(createConversation(greetingCvers))
 bot.use(createConversation(buySwapCvers))
 bot.use(createConversation(copyTradeCvers))
-bot.use(createConversation(copyTraderListCvers))
 bot.use(createConversation(copyTraderListTargetCvers))
 
 bot.api.setMyCommands([

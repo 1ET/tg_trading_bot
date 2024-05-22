@@ -2,13 +2,27 @@ import bot from "@app/functions/grammy";
 import { userSetting } from '@app/functions/commands'
 import { setLanguage } from '@app/functions/ui'
 // import { buyCoin } from '@app/functions/swap'
-import * as Telegram from "@telegraf/types";
 import { bold, fmt, hydrateReply, italic, link } from "@grammyjs/parse-mode";
 import { startMenu, buySwapMenu } from '@app/view/menu'
 import { startBox } from '@app/view/messagebox'
 import { checkTokenInfo } from "@app/raydium/index"
 import { buyBox } from '@app/view/messagebox'
 import { moneyFormat2 } from '@app/utils/index'
+import translations from '@app/routes/translations'
+import { InlineKeyboard } from 'grammy'
+import { addCopyStrategy, pauseAllStrategy } from '@app/database/api/api'
+import { getUserExit } from '@app/database/api/api'
+import { checkBalance } from '@app/raydium/index'
+import { conversations } from "@grammyjs/conversations";
+
+const addTradeMenuKeybord = (params = {}) => {
+	const keyboard = new InlineKeyboard()
+		.text("target", "Target").row()
+		.text("Pause All", "BuyAmount").text("⬅ Back", "CopySell").row()
+		.text("➕ Add", "Add").row()
+
+	return keyboard
+}
 
 const text = async (): Promise<void> => {
 	bot.on("message", async (ctx) => {
@@ -19,8 +33,11 @@ const text = async (): Promise<void> => {
 
 const callbackQuery = async (): Promise<void> => {
 	bot.on("callback_query:data", async (ctx: any) => {
-		console.log('Event_02', ctx.callbackQuery.data)
-		switch (ctx.callbackQuery.data) {
+		let callBackData = ctx.callbackQuery.data.split("-")
+		let callBackEvent = callBackData[0]
+		let callBackParams = callBackData[1]
+		console.log('Event_02', callBackData)
+		switch (callBackEvent) {
 			case 'Chinese':
 				console.log('用户点击Chinese')
 				userSetting.language = "Chinaese"
@@ -46,13 +63,8 @@ const callbackQuery = async (): Promise<void> => {
 				}
 				break;
 			case 'Position':
-				try {
-					console.log('用户点击仓位', ctx)
-					ctx.reply('Position')
-				} catch (error) {
-					console.log('用户点击仓位失败', error)
-				}
-
+				console.log('用户点击仓位', ctx)
+				ctx.reply('Position')
 				break;
 			case 'Target':
 				console.log('用户点击Target')
@@ -68,7 +80,27 @@ const callbackQuery = async (): Promise<void> => {
 				break;
 			case 'NewCopy':
 				console.log('用户点击NewCopy')
-				await ctx.conversation.enter("copyTraderListCvers")
+				await ctx.editMessageText(translations.en.addTargetTip, {
+					parse_mode: "HTML",
+					reply_markup: addTradeMenuKeybord()
+				})
+				break;
+			case 'Add':
+				console.log('用户点击Add')
+				// 存入数据库-并且
+				let addParams = {
+					add: '',
+					target: callBackParams,
+					buyAmount: "10%",
+					copySell: 1,
+					buyGas: "0.0015 SOL",
+					sellGas: "0.0015 SOL",
+					slippage: "15%",
+				}
+				let insertData = await addCopyStrategy(ctx.from.id, addParams)
+				console.log('insertData===》', insertData)
+				// 返回copyList
+				await ctx.conversation.enter("copyTradeCvers")
 				break;
 			case 'Sniper':
 				console.log('用户点击狙击')
@@ -88,34 +120,43 @@ const callbackQuery = async (): Promise<void> => {
 				break;
 			case 'Help':
 				console.log('用户点击帮助-help弹窗')
-				ctx.answerCallbackQuery('Help')
-				break;
-			case 'help':
-				console.log('用户点击帮助-help弹窗')
-				ctx.answerCallbackQuery('Help')
+				ctx.reply(translations.en.helpText)
 				break;
 			case 'Refresh':
 				console.log('用户点击首页帮助')
-				ctx.reply('Refresh')
 				break;
-			// case 'Back':
-			// 	console.log('hears_Back')
-			// 	const startBoxParams = {
-			// 		pub: ctx.session.value.pubkey,
-			// 		balance: moneyFormat2(ctx.session.value.balance * 1e-9)
-			// 	}
-			// 	await ctx.deleteMessages([ctx.callbackQuery.message.message_id])
-			// 	await ctx.reply(startBox(startBoxParams), {
-			// 		parse_mode: "HTML",
-			// 		reply_markup: {
-			// 			inline_keyboard:
-			// 				startMenu
-			// 		}
-			// 	})
-			// 	break;
+			case 'CopyTradeBack':
+				const userExit = await getUserExit(ctx.from)
+				if (userExit === false) {
+					ctx.reply("serve error!")
+					return
+				}
+				const userBalance = await checkBalance(userExit['pub'])
+				const balanceFormat = moneyFormat2(userBalance * 1e-9)
+				const startBoxParams = {
+					pub: userExit['pub'],
+					balance: balanceFormat
+				}
+				ctx.editMessageText(startBox(startBoxParams),
+					{
+						parse_mode: 'HTML',
+						reply_markup: {
+							inline_keyboard:
+								startMenu
+						},
+					}
+				)
+				break;
 			case 'PauseAllCopy':
-				console.log('用户点击PauseAllCopy')
-				ctx.answerCallbackQuery('PauseAllCopy')
+				// 1. 暂停所有跟单
+				await pauseAllStrategy(ctx.from.id)
+				// 2. 重新渲染跟单列表
+				try {
+					console.log('需要修改')
+					await ctx.conversation.enter("copyTradeCvers")
+				} catch (error) {
+					console.log('不需要修改')
+				}
 				break;
 			case 'a_swap':
 				console.log('用户点击交易')
@@ -155,7 +196,7 @@ const callbackQuery = async (): Promise<void> => {
 				break;
 
 			default:
-				ctx.answerCallbackQuery('default')
+				// ctx.answerCallbackQuery('default')
 				break;
 		}
 	});
