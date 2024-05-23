@@ -1,8 +1,8 @@
 {
 	"restartable": "rs",
-	"ignore": [".git", "node_modules/**/*"],
+	"ignore": ["*"],
 	"verbose": true,
-	"watch": ["app/", "translations/", "configs/"],
+	"watch": [],
 	"env": {
 		"NODE_ENV": "development"
 	},

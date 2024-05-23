@@ -12,7 +12,7 @@ import { initCrypto } from "@app/crypto/index"
  */
 (async () => {
 	// await rediseInit();
-	await initCrypto()
+	// await initCrypto()
 	await command.quit();
 	await command.start();
 	// await hears.text();

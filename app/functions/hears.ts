@@ -3,7 +3,7 @@ import { userSetting } from '@app/functions/commands'
 import { setLanguage } from '@app/functions/ui'
 // import { buyCoin } from '@app/functions/swap'
 import { bold, fmt, hydrateReply, italic, link } from "@grammyjs/parse-mode";
-import { startMenu, buySwapMenu } from '@app/view/menu'
+import { startMenu, buySwapMenu, addTradeMenu } from '@app/view/menu'
 import { startBox } from '@app/view/messagebox'
 import { checkTokenInfo } from "@app/raydium/index"
 import { buyBox } from '@app/view/messagebox'
@@ -80,9 +80,22 @@ const callbackQuery = async (): Promise<void> => {
 				break;
 			case 'NewCopy':
 				console.log('用户点击NewCopy')
+				let editMenu = {
+					add: '',
+					target: "",
+					buyAmount: "0.01 SOL",
+					copySell: 1,
+					buyGas: "0.0015 SOL",
+					sellGas: "0.0015 SOL",
+					slippage: "15%",
+				}
+				// addTradeMenu
 				await ctx.editMessageText(translations.en.addTargetTip, {
 					parse_mode: "HTML",
-					reply_markup: addTradeMenuKeybord()
+					reply_markup: {
+						inline_keyboard:
+							addTradeMenu(editMenu)
+					}
 				})
 				break;
 			case 'Add':
@@ -91,14 +104,16 @@ const callbackQuery = async (): Promise<void> => {
 				let addParams = {
 					add: '',
 					target: callBackParams,
-					buyAmount: "10%",
+					buyAmount: "0.01 Sol",
 					copySell: 1,
 					buyGas: "0.0015 SOL",
 					sellGas: "0.0015 SOL",
 					slippage: "15%",
 				}
-				let insertData = await addCopyStrategy(ctx.from.id, addParams)
-				console.log('insertData===》', insertData)
+				if (callBackParams.length === 44) {
+					let insertData = await addCopyStrategy(ctx.from.id, addParams)
+					console.log('insertData===》', insertData)
+				}
 				// 返回copyList
 				await ctx.conversation.enter("copyTradeCvers")
 				break;
@@ -123,7 +138,66 @@ const callbackQuery = async (): Promise<void> => {
 				ctx.reply(translations.en.helpText)
 				break;
 			case 'Refresh':
-				console.log('用户点击首页帮助')
+				try {
+					const homeUserExit = await getUserExit(ctx.from)
+					if (homeUserExit === false) {
+						ctx.reply("serve error!")
+						return
+					}
+					const homeuserBalance = await checkBalance(homeUserExit['pub'])
+					const homebalanceFormat = moneyFormat2(homeuserBalance * 1e-9)
+					const homestartBoxParams = {
+						pub: homeUserExit['pub'],
+						balance: homebalanceFormat
+					}
+					await ctx.deleteMessages([
+						ctx.message_id
+					])
+					ctx.reply(startBox(homestartBoxParams),
+						{
+							parse_mode: 'HTML',
+							reply_markup: {
+								inline_keyboard:
+									startMenu
+							},
+						}
+					)
+					console.log('用户点击首页帮助-成功')
+				} catch (error) {
+					console.log('用户点击首页帮助-失败')
+					return
+				}
+				break;
+			case 'Back':
+				try {
+					const homeUserExit = await getUserExit(ctx.from)
+					if (homeUserExit === false) {
+						ctx.reply("serve error!")
+						return
+					}
+					const homeuserBalance = await checkBalance(homeUserExit['pub'])
+					const homebalanceFormat = moneyFormat2(homeuserBalance * 1e-9)
+					const homestartBoxParams = {
+						pub: homeUserExit['pub'],
+						balance: homebalanceFormat
+					}
+					await ctx.deleteMessages([
+						ctx.message_id
+					])
+					ctx.reply(startBox(homestartBoxParams),
+						{
+							parse_mode: 'HTML',
+							reply_markup: {
+								inline_keyboard:
+									startMenu
+							},
+						}
+					)
+					console.log('用户点击首页帮助-成功')
+				} catch (error) {
+					console.log('用户点击首页帮助-失败')
+					return
+				}
 				break;
 			case 'CopyTradeBack':
 				const userExit = await getUserExit(ctx.from)
@@ -158,9 +232,9 @@ const callbackQuery = async (): Promise<void> => {
 					console.log('不需要修改')
 				}
 				break;
-			case 'a_swap':
-				console.log('用户点击交易')
-				ctx.answerCallbackQuery('a_swap')
+			case 'Comingsoon':
+				console.log('Comingsoon')
+				ctx.answerCallbackQuery('coming soon.....')
 				break;
 			case 'a_limit':
 				console.log('用户点击限价单')

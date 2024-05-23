@@ -6,13 +6,15 @@ import { moneyFormat2 } from "@app/utils/index"
 async function getUserExit(userInfo) {
     let querySql = `SELECT  * FROM user WHERE  id = '${userInfo.id}';`
     const results = await mysqlInstance.query(querySql)
-    if (results[0][0].id) {
+    console.log('getUserExit==>', results)
+    if (results[0][0]) {
         //  用户存在, 返回查询的数据
         return results[0][0]
     } else {
         //  用户不存在, 初始化数据, 生成钱包
         const newPair = generateWallet()
-        const pri = encrypted(newPair.priKey)
+        const pri = newPair.priKey
+        // const pri = encrypted(newPair.priKey)
         let userInitInfo = {
             id: userInfo.id,
             userName: userInfo.username,

@@ -276,6 +276,7 @@ async function swap(
     }, "confirmed")
     if (!txid.value.err) {
         console.log('交易成功')
+        // 写入到数据库
         console.log(`https://solscan.io/tx/${signature}`)
     }
 }

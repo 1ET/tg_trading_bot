@@ -1,7 +1,7 @@
 {
 	"tapToCopy": "(Tap to copy)",
 	"start": {
-		"welcome": "😄 Welcome to the 1t Bot! 🤖",
+		"welcome": "😄 Welcome to the solana Bot! 🤖",
 		"chain": "🕸 Solana",
 		"balance": "Balance",
 		"tip": "Click on the Refresh button to update your current balance."
